@@ -1,2 +1,2 @@
-# system-zero
-System Zero is an interactive visualization and simulation platform for learning Computer Architecture and Operating Systems concepts. It is built in React and is designed for students and developers exploring the inner workings of computing systems.
+# System Zero
+System Zero is a zero setup, browser-based React application that functions as an interactive visualiser and educational tool for learning Computer Architecture and Operating Systems concepts, letting users watch a machine think in real time and build it from the ground up.
