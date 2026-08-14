@@ -1,0 +1,141 @@
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.modern-footer {
+  background-color: var(--bg-dark);
+  padding: 8rem 5% 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6rem;
+  position: relative;
+  z-index: 3;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-top-tier {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 4rem;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.footer-brand-statement {
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.footer-nav-grid {
+  display: flex;
+  gap: 6rem;
+}
+
+.footer-nav-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.footer-nav-col h5 {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0 0 0.5rem 0;
+  font-weight: 500;
+}
+
+.footer-nav-col a {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+.footer-nav-col a:hover {
+  color: var(--accent-cyan);
+}
+
+.footer-middle-tier {
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-middle-tier h1 {
+  font-size: 14vw;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  color: #1a1a24; /* Dark grey to sit heavily in background */
+  margin: 0;
+  line-height: 0.8;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.footer-bottom-tier {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.footer-logo {
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+}
+
+.footer-bottom-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.footer-bottom-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: color 0.3s ease;
+}
+
+.footer-bottom-links a:hover {
+  color: var(--text-primary);
+}
+
+/* --- Responsive --- */
+@media (max-width: 992px) {
+  .footer-nav-grid {
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-top-tier {
+    flex-direction: column;
+    gap: 3rem;
+  }
+  .footer-bottom-tier {
+    flex-direction: column;
+    text-align: center;
+  }
+  .footer-bottom-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
