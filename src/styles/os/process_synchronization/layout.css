@@ -263,8 +263,16 @@
   width: 4px;
   height: 18px;
   border-radius: 2px;
-  background: var(--gate-unlocked-color);
-  box-shadow: 0 0 8px rgba(52, 211, 153, 0.35);
+  background: var(--gate-unlocked-color, #34d399);
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.4);
+  transition: background 0.25s ease, box-shadow 0.25s ease, height 0.25s ease;
+}
+
+.gate-pin.locked,
+.track-gate-node.locked .gate-pin {
+  background: #f87171 !important;
+  box-shadow: 0 0 12px rgba(248, 113, 113, 0.8), 0 0 4px #f87171 !important;
+  height: 22px;
 }
 
 .gate-label {
@@ -280,6 +288,19 @@
   user-select: none;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
   white-space: nowrap;
+  transition: color 0.25s ease, text-shadow 0.25s ease;
+}
+
+.gate-label.locked,
+.track-gate-node.locked .gate-label {
+  color: #f87171 !important;
+  text-shadow: 0 0 8px rgba(248, 113, 113, 0.7) !important;
+}
+
+.gate-label.unlocked,
+.track-gate-node.unlocked .gate-label {
+  color: #34d399 !important;
+  text-shadow: 0 0 6px rgba(52, 211, 153, 0.4);
 }
 
 .track-terminated-label {
