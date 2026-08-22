@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import Lenis from '@studio-freight/lenis';
-import Hero from '../components/Hero';
-import Content from '../components/Content';
+import Hero from './Hero';
+import Content from '../components/landing/Content';
 
-export default function Landing() {
+export default function LandingPage() {
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,

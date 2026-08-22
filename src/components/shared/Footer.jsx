@@ -1,3 +1,5 @@
+//System Zero Footer Componenet - to be updated (Still a prototype)
+
 import './Footer.css';
 
 export default function Footer() {

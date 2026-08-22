@@ -1,0 +1,1165 @@
+/* ==========================================================================
+   SYSTEM ZERO - LUXURY TACTILE DESIGN SYSTEM (SAN FRANCISCO / APPLE / LINEAR)
+   ========================================================================== */
+
+/* App Shell */
+.app-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--bg-base);
+  overflow: hidden;
+  padding-top: 5.25rem;
+}
+
+/* Sidebar */
+.sidebar {
+  border-right: 1px solid var(--border-subtle);
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  background: rgba(13, 17, 23, 0.95);
+  z-index: 30;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  color: var(--text-primary);
+  padding-left: 8px;
+}
+
+.brand-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #0d1117;
+}
+
+.sidebar-section-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  padding-left: 10px;
+}
+
+.nav-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--text-secondary);
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.88rem;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-primary);
+}
+
+.nav-link.active {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.nav-link.active::after {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+/* Main Content Wrapper */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Header */
+.header {
+  height: 58px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  background: rgba(13, 17, 23, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 20;
+}
+
+.header-title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header h1 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  color: var(--text-primary);
+}
+
+.page-wrapper {
+  flex: 1;
+  padding: 20px 28px 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Simulation Container */
+.sim-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+  width: 100%;
+}
+
+/* ==========================================================================
+   THE ARENA (STAGE CANVAS)
+   ========================================================================== */
+.sim-arena {
+  flex: 1.4;
+  min-height: 390px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  background: radial-gradient(circle at 50% 50%, #131b2e 0%, #0d1117 100%);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Subtle grid dots */
+.sim-arena::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* ==========================================================================
+   1. PIPELINE TRACK SYSTEM (ENTRY & EXIT CONDUITS)
+   ========================================================================== */
+.arena-track-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Pipeline Conduits Base */
+.rail-conduit {
+  position: absolute;
+  height: 12px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.02) 40%, rgba(0, 0, 0, 0.6) 80%, rgba(255, 255, 255, 0.05) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.7), 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  overflow: visible;
+}
+
+/* Inner Glowing Energy Conduit Line */
+.pipe-glow-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.15) 0%, rgba(56, 189, 248, 0.4) 50%, rgba(56, 189, 248, 0.15) 100%);
+  box-shadow: 0 0 6px rgba(56, 189, 248, 0.3);
+  pointer-events: none;
+}
+
+/* Tactile Pipe Flanges / Joint Collars */
+.pipe-ring {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 5px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #64748b 0%, #334155 50%, #1e293b 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
+  z-index: 3;
+}
+
+.pipe-ring.ring-1 { left: 30%; }
+.pipe-ring.ring-2 { left: 70%; }
+
+/* Entry Rail Conduits (Left of Critical Section) */
+.rail-conduit-entry {
+  left: 0;
+  right: calc(50% + 305px);
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.rail-conduit-entry.rail-p0 {
+  top: 32%;
+}
+
+.rail-conduit-entry.rail-p1 {
+  top: 68%;
+}
+
+/* Exit Rail Conduits (Right of Critical Section - Symmetrical Construction) */
+.rail-conduit-exit {
+  left: calc(50% + 305px);
+  right: 0;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.rail-conduit-exit.rail-p0 {
+  top: 32%;
+}
+
+.rail-conduit-exit.rail-p1 {
+  top: 68%;
+}
+
+/* Physical Gate Nodes (Left Entry Gates) */
+.track-gate-node {
+  position: absolute;
+  transform: translateY(-50%);
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto;
+}
+
+.track-gate-node.gate-p0 {
+  left: calc(50% - 325px);
+  top: 32%;
+}
+
+.track-gate-node.gate-p1 {
+  left: calc(50% - 325px);
+  top: 68%;
+}
+
+.gate-pin {
+  width: 4px;
+  height: 18px;
+  border-radius: 2px;
+  background: var(--gate-unlocked-color);
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.35);
+}
+
+.gate-label {
+  position: absolute;
+  top: -24px;
+  font-size: 0.72rem;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: #34d399;
+  letter-spacing: 0.05em;
+  background: transparent;
+  border: none;
+  user-select: none;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+}
+
+/* De-emphasized Terminated Queue End Labels on Right */
+.track-terminated-label {
+  position: absolute;
+  right: 32px;
+  transform: translateY(-50%);
+  font-size: 0.75rem;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  opacity: 0.35;
+  z-index: 4;
+  user-select: none;
+}
+
+.terminated-p0 {
+  top: 32%;
+}
+
+.terminated-p1 {
+  top: 68%;
+}
+
+/* ==========================================================================
+   2. THE CRITICAL SECTION ZONE (EXECUTION REGION & SHARED MEMORY)
+   ========================================================================== */
+.critical-section-zone {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  transform: translate(-50%, -50%);
+  width: 610px;
+  height: 74%;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 122, 89, 0.35);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  animation: csDangerPulse 4s infinite ease-in-out;
+  z-index: 10;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+@keyframes csDangerPulse {
+  0%, 100% {
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 20px rgba(255, 122, 89, 0.05);
+  }
+  50% {
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 32px rgba(255, 122, 89, 0.12);
+  }
+}
+
+/* Shockwave Flash on Collision / Lost Update */
+.critical-section-zone.vault-alarm-active {
+  border-color: rgba(244, 63, 94, 0.85);
+  box-shadow: 0 0 40px rgba(244, 63, 94, 0.35), 0 16px 40px rgba(0, 0, 0, 0.6);
+  animation: none;
+}
+
+/* Repositioned CS Title: Placed Directly Below Bounding Box in Pure White Cursive Font */
+.cs-underneath-title {
+  position: absolute;
+  bottom: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-cursive);
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 0.05em;
+  text-shadow: 0 2px 10px rgba(255, 255, 255, 0.2);
+  user-select: none;
+  white-space: nowrap;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cs-underneath-title.alarm-active {
+  color: #FF6B6B;
+  text-shadow: 0 0 12px rgba(255, 107, 107, 0.45);
+  animation: cursivePulse 2s ease-in-out infinite;
+}
+
+@keyframes cursivePulse {
+  0%, 100% {
+    text-shadow: 0 0 12px rgba(255, 107, 107, 0.45);
+    color: #FF6B6B;
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(255, 107, 107, 0.7);
+    color: #ffa3b3;
+  }
+}
+
+/* Left Sub-Zone: Execution Docking Bays Column */
+.cs-bays-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  width: 188px;
+  padding: 6px 0;
+  z-index: 2;
+}
+
+/* Recessed Execution Sockets (Tactile Inner & Soft Drop Shadow) */
+.docking-socket {
+  height: 58px;
+  border-radius: 14px;
+  background: var(--socket-bg);
+  box-shadow: var(--socket-shadow), 0 2px 8px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--socket-border);
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.2s ease;
+}
+
+.socket-bay-name {
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.socket-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  opacity: 0.7;
+}
+
+/* ==========================================================================
+   MEMORY BUS CONDUITS & CURRENCY PACKET ANIMATIONS
+   ========================================================================== */
+.cs-connectors-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 24px 0;
+  position: relative;
+}
+
+.bus-conduit-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 20px;
+  position: relative;
+}
+
+/* Semi-transparent Memory Bus Conduit */
+.bus-conduit {
+  width: 100%;
+  height: 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6), 0 0 8px rgba(250, 204, 21, 0.08);
+  position: relative;
+  overflow: visible;
+}
+
+/* Minimalist Currency Token flowing along the Memory Bus */
+.currency-token {
+  position: absolute;
+  top: 50%;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.currency-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.18);
+  border: 1px solid rgba(52, 211, 153, 0.45);
+  color: #a7f3d0;
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.25), 0 2px 5px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* Line 2 (Load): Flows from Vault (Right 100%) -> Bay (Left 0%) */
+.currency-token.flow-load {
+  animation: currencyLoadFlow 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes currencyLoadFlow {
+  0% {
+    left: 100%;
+    transform: translateY(-50%) translateX(-100%) scale(0.7);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-50%) translateX(-50%) scale(1.05);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(-50%) translateX(-50%) scale(1.05);
+  }
+  100% {
+    left: 0%;
+    transform: translateY(-50%) translateX(0%) scale(0.7);
+    opacity: 0;
+  }
+}
+
+/* Line 4 (Store): Flows from Bay (Left 0%) -> Vault (Right 100%) */
+.currency-token.flow-store {
+  animation: currencyStoreFlow 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes currencyStoreFlow {
+  0% {
+    left: 0%;
+    transform: translateY(-50%) translateX(0%) scale(0.7);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-50%) translateX(-50%) scale(1.05);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(-50%) translateX(-50%) scale(1.05);
+  }
+  100% {
+    left: 100%;
+    transform: translateY(-50%) translateX(-100%) scale(0.7);
+    opacity: 0;
+  }
+}
+
+/* Right Sub-Zone: Shared Vault (Shared Memory int balance) */
+.shared-vault-memory {
+  width: 245px;
+  height: 100%;
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.04) 0%, rgba(13, 17, 28, 0.9) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.12);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  padding: 18px 12px;
+  z-index: 2;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.shared-vault-memory.pulse-update {
+  animation: vaultPulse 0.6s ease-out;
+}
+
+@keyframes vaultPulse {
+  0% { transform: scale(1); border-color: rgba(255, 255, 255, 0.08); }
+  50% { transform: scale(1.03); border-color: rgba(255, 255, 255, 0.35); box-shadow: 0 0 30px rgba(255, 255, 255, 0.15); }
+  100% { transform: scale(1); border-color: rgba(255, 255, 255, 0.08); }
+}
+
+.shared-vault-memory.vault-alarm-flash {
+  border-color: rgba(244, 63, 94, 0.85);
+  box-shadow: 0 0 32px rgba(244, 63, 94, 0.4), inset 0 0 15px rgba(244, 63, 94, 0.15);
+  animation: vaultAlarmShake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes vaultAlarmShake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-3px, 0, 0); }
+  40%, 60% { transform: translate3d(3px, 0, 0); }
+}
+
+.vault-title-label {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+/* Odometer-Style Rolling Number Vault Balance (Significantly Increased Size) */
+.vault-balance-value {
+  font-size: 4.4rem;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: -2px;
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.vault-variable-tag {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  opacity: 0.8;
+}
+
+/* Audit balance sub-bar */
+.vault-audit-stats {
+  position: absolute;
+  bottom: 18px;
+  width: calc(100% - 32px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.02em;
+}
+
+.vault-audit-stats .expected-stat {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.vault-audit-stats .drift-stat {
+  color: #fb7185;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   5. PREMIUM TOAST ALERT (COLLISION / LOST UPDATE)
+   ========================================================================== */
+.lost-update-toast {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  background: rgba(244, 63, 94, 0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(244, 63, 94, 0.45);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 20px rgba(244, 63, 94, 0.2);
+  animation: toastSlideShake 3.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  z-index: 40;
+  max-width: 90%;
+  white-space: nowrap;
+}
+
+@keyframes toastSlideShake {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-12px) scale(0.95);
+  }
+  10% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  15% { transform: translateX(calc(-50% - 4px)) translateY(0); }
+  20% { transform: translateX(calc(-50% + 4px)) translateY(0); }
+  25% { transform: translateX(calc(-50% - 3px)) translateY(0); }
+  30% { transform: translateX(calc(-50% + 2px)) translateY(0); }
+  35% { transform: translateX(-50%) translateY(0); }
+  85% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-8px) scale(0.96);
+  }
+}
+
+.toast-icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f43f5e;
+  flex-shrink: 0;
+}
+
+.warning-svg {
+  width: 18px;
+  height: 18px;
+}
+
+.toast-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+}
+
+.toast-title {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #fda4af;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.toast-math {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #fecdd3;
+  opacity: 0.85;
+}
+
+/* ==========================================================================
+   3. ANIMATED PROCESS PODS (FLUID MOTION & NATURAL DECELERATION)
+   ========================================================================== */
+.animated-pod {
+  position: absolute;
+  width: 152px;
+  height: 50px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #0d1117;
+  z-index: 25;
+  transition: transform 1.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.1s cubic-bezier(0.65, 0, 1, 1), box-shadow 0.3s ease;
+  user-select: none;
+  /* border and box-shadow are applied directly via React inline style */
+}
+
+.animated-pod::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 8px;
+  right: 8px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  pointer-events: none;
+}
+
+/* Base horizontal coordinate aligning perfectly with Bay socket */
+.animated-pod {
+  left: calc(50% - 263px);
+}
+
+/* Positional Transform States */
+/* 0. Spawning / Entering (Glides in from far left entry track) */
+.animated-pod.pod-pos-spawning {
+  animation: podEnterGlide 1.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes podEnterGlide {
+  0% {
+    transform: translateY(-50%) translateX(-850px);
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-50%) translateX(-280px);
+    opacity: 1;
+  }
+}
+
+/* 1. Ready (Resting on Entry Track, before gate) */
+.animated-pod.pod-pos-ready {
+  transform: translateY(-50%) translateX(-280px);
+  opacity: 1;
+}
+
+/* 2. In Bay (Docked inside Critical Section Bay) */
+.animated-pod.pod-pos-bay {
+  transform: translateY(-50%) translateX(0px);
+  opacity: 1;
+}
+
+/* 3. Terminated / Exiting (Glides out through right exit track) */
+.animated-pod.pod-pos-terminated {
+  animation: podExitGlide 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes podExitGlide {
+  0% {
+    transform: translateY(-50%) translateX(0px);
+    opacity: 1;
+  }
+  45% {
+    transform: translateY(-50%) translateX(380px);
+    opacity: 1;
+  }
+  75% {
+    transform: translateY(-50%) translateX(650px);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translateY(-50%) translateX(880px);
+    opacity: 0;
+  }
+}
+
+/* 4. Fading out before next spawn */
+.animated-pod.pod-fading {
+  opacity: 0 !important;
+}
+
+.pod-id-tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  background: rgba(0, 0, 0, 0.25);
+  color: #111827; /* Dark text for contrast against colored background */
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.pod-info-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.pod-register-val {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  letter-spacing: 0.02em;
+}
+
+.pod-state-pill {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ==========================================================================
+   4. BOTTOM PANELS (SEGMENTED CONTROLS & CUSTOM SLIDER)
+   ========================================================================== */
+.sim-bottom-panel {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 16px;
+  flex: 0.85;
+  min-height: 210px;
+}
+
+/* Controls Panel */
+.controls-panel {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.control-section-header {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  min-inline-size: 0;
+}
+
+legend {
+  padding: 0;
+  margin: 0;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.control-group label,
+.control-group legend {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* Modern Segmented Control Component */
+.segmented-control {
+  display: flex;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.segmented-btn {
+  flex: 1;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.segmented-btn:hover:not(.active) {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.segmented-btn.active {
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.btn-track {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--btn-border, rgba(255, 255, 255, 0.08));
+  color: var(--btn-color, #ffffff);
+  background: rgba(20, 20, 25, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+.btn-track:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 12px var(--btn-glow, transparent);
+  transform: translateY(-1px);
+}
+
+.btn-track:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-reset {
+  padding: 7px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+
+.btn-reset:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+}
+
+/* Custom Speed Slider with Dynamic Fill Track & Tick Marks */
+.slider-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.custom-range-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    #ffffff 0%,
+    #ffffff var(--fill-percent, 33%),
+    rgba(255, 255, 255, 0.12) var(--fill-percent, 33%),
+    rgba(255, 255, 255, 0.12) 100%
+  );
+  outline: none;
+  cursor: pointer;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.custom-range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  transition: transform 0.15s ease;
+}
+
+.custom-range-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.custom-range-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: none;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  transition: transform 0.15s ease;
+}
+
+.custom-range-slider::-moz-range-thumb:hover {
+  transform: scale(1.2);
+}
+
+.slider-ticks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+  padding: 0 2px;
+}
+
+.slider-tick {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.slider-tick:hover {
+  color: var(--text-secondary);
+}
+
+.slider-tick.active {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Full-Line Code Viewer & Terminal */
+.code-viewer-panel {
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.code-viewer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.code-title {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.code-thread-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.code-content {
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  line-height: 1.8;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+/* Full-Line Highlighting */
+.code-line {
+  display: flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 6px;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  width: 100%;
+}
+
+.code-line:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.line-num {
+  color: var(--text-muted);
+  width: 26px;
+  user-select: none;
+  font-size: 0.76rem;
+  font-weight: 500;
+}
+
+.line-text {
+  flex: 1;
+  white-space: pre;
+  color: #cbd5e1;
+}
+
+.line-text .kw { color: #f472b6; }
+.line-text .comment { color: #64748b; font-style: italic; }
+
+.indicator-pill {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  letter-spacing: 0.02em;
+}

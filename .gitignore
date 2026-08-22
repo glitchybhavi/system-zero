@@ -166,3 +166,8 @@ dist-ssr
 *.rar
 *.7z
 *.gz
+
+*.md
+
+test
+

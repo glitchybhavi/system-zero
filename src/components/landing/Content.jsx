@@ -1,3 +1,8 @@
+// Landing Page content component 
+// Dev Notes: I  used LERP Scroll technique and Lenis engine to make this landing page Smooth and to achieve desirable output. 
+// Contents of Page are still in prototype and will be updated
+
+
 import { useEffect, useRef } from 'react';
 import './Content.css';
 
