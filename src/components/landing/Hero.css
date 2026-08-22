@@ -1,0 +1,29 @@
+/* ==========================================================================
+   HERO — 3D canvas hero + sticky-pinned scroll-morph text reveal
+   ========================================================================== */
+
+.hero-section {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+}
+
+.canvas-container {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  opacity: 0;
+  animation: fadeInCanvas 1.5s var(--ease-premium) 0.5s forwards;
+}
+
+@keyframes fadeInCanvas {
+  to {
+    opacity: 1;
+  }
+}
+
+
