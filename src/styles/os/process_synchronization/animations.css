@@ -1,4 +1,3 @@
-/* Process Execution Pathway & Balance Visuals */
 .execution-pathway,
 .track-system {
   position: absolute;
@@ -55,7 +54,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Process Pods */
 .process-pod {
   position: absolute;
   width: 100px;
@@ -69,22 +67,19 @@
   color: #000;
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 20;
-  margin-top: -20px; /* Center on rail */
+  margin-top: -20px; 
   margin-left: -50px;
 }
 
 .pod-p0 { background: var(--coral); box-shadow: 0 0 24px var(--coral-glow); }
 .pod-p1 { background: var(--mint); box-shadow: 0 0 24px var(--mint-glow); }
 
-/* Pod States & Positions */
-/* 0: Ready, 1: Gate, 2: Read, 3: Calc, 4: Write, 5: Exit, 6: Terminated */
 .pod-p0[data-state="0"] { left: 10%; top: 30%; }
 .pod-p1[data-state="0"] { left: 10%; top: 70%; }
 
 .pod-p0[data-state="1"] { left: 28%; top: 30%; }
 .pod-p1[data-state="1"] { left: 28%; top: 70%; }
 
-/* Inside Vault (Merged Track) */
 .pod-p0[data-state="2"], .pod-p0[data-state="3"], .pod-p0[data-state="4"] { top: 50%; transform: translateY(-22px); }
 .pod-p1[data-state="2"], .pod-p1[data-state="3"], .pod-p1[data-state="4"] { top: 50%; transform: translateY(22px); }
 
@@ -98,7 +93,6 @@
 .pod-p0[data-state="6"] { left: 95%; top: 30%; opacity: 0; }
 .pod-p1[data-state="6"] { left: 95%; top: 70%; opacity: 0; }
 
-/* Gates */
 .gate {
   position: absolute;
   left: 35%;
@@ -112,7 +106,6 @@
 .gate-p1 { top: 70%; }
 .gate.open { transform: rotate(-90deg); background: var(--text-primary); }
 
-/* Terminated Queue */
 .terminated-queue {
   position: absolute;
   right: 24px;
@@ -135,7 +128,6 @@
   to { opacity: 1; transform: translateX(0); }
 }
 
-/* Sync State UI (Locks/Flags) */
 .sync-state-panel {
   position: absolute;
   left: 24px;

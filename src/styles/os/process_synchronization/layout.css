@@ -1,8 +1,3 @@
-/* ==========================================================================
-   SYSTEM ZERO - LUXURY TACTILE DESIGN SYSTEM (SAN FRANCISCO / APPLE / LINEAR)
-   ========================================================================== */
-
-/* App Shell */
 .app-layout {
   display: grid;
   grid-template-columns: 240px 1fr;
@@ -13,7 +8,6 @@
   padding-top: 5.25rem;
 }
 
-/* Sidebar */
 .sidebar {
   border-right: 1px solid var(--border-subtle);
   padding: 24px 16px;
@@ -95,16 +89,12 @@
   border-radius: 50%;
   background: #ffffff;
 }
-
-/* Main Content Wrapper */
 .main-content {
   display: flex;
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
-}
 
-/* Header */
 .header {
   height: 58px;
   border-bottom: 1px solid var(--border-subtle);
@@ -139,7 +129,6 @@
   flex-direction: column;
 }
 
-/* Simulation Container */
 .sim-container {
   display: flex;
   flex-direction: column;
@@ -148,9 +137,6 @@
   width: 100%;
 }
 
-/* ==========================================================================
-   THE ARENA (STAGE CANVAS)
-   ========================================================================== */
 .sim-arena {
   flex: 1.4;
   min-height: 390px;
@@ -165,7 +151,6 @@
   justify-content: center;
 }
 
-/* Subtle grid dots */
 .sim-arena::before {
   content: '';
   position: absolute;
@@ -176,16 +161,12 @@
   opacity: 0.5;
 }
 
-/* ==========================================================================
-   1. PIPELINE TRACK SYSTEM (ENTRY & EXIT CONDUITS)
-   ========================================================================== */
 .arena-track-layer {
   position: absolute;
   inset: 0;
   pointer-events: none;
 }
 
-/* Pipeline Conduits Base */
 .rail-conduit {
   position: absolute;
   height: 12px;
@@ -199,7 +180,6 @@
   overflow: visible;
 }
 
-/* Inner Glowing Energy Conduit Line */
 .pipe-glow-line {
   position: absolute;
   left: 0;
@@ -210,7 +190,6 @@
   pointer-events: none;
 }
 
-/* Tactile Pipe Flanges / Joint Collars */
 .pipe-ring {
   position: absolute;
   top: -3px;
@@ -226,7 +205,6 @@
 .pipe-ring.ring-1 { left: 30%; }
 .pipe-ring.ring-2 { left: 70%; }
 
-/* Entry Rail Conduits (Left of Critical Section) */
 .rail-conduit-entry {
   left: 0;
   right: calc(50% + 305px);
@@ -242,7 +220,6 @@
   top: 68%;
 }
 
-/* Exit Rail Conduits (Right of Critical Section - Symmetrical Construction) */
 .rail-conduit-exit {
   left: calc(50% + 305px);
   right: 0;
@@ -258,7 +235,6 @@
   top: 68%;
 }
 
-/* Physical Gate Nodes (Left Entry Gates) */
 .track-gate-node {
   position: absolute;
   transform: translateY(-50%);
@@ -283,8 +259,16 @@
   width: 4px;
   height: 18px;
   border-radius: 2px;
-  background: var(--gate-unlocked-color);
-  box-shadow: 0 0 8px rgba(52, 211, 153, 0.35);
+  background: var(--gate-unlocked-color, #34d399);
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.4);
+  transition: background 0.25s ease, box-shadow 0.25s ease, height 0.25s ease;
+}
+
+.gate-pin.locked,
+.track-gate-node.locked .gate-pin {
+  background: #f87171 !important;
+  box-shadow: 0 0 12px rgba(248, 113, 113, 0.8), 0 0 4px #f87171 !important;
+  height: 22px;
 }
 
 .gate-label {
@@ -300,9 +284,21 @@
   user-select: none;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
   white-space: nowrap;
+  transition: color 0.25s ease, text-shadow 0.25s ease;
 }
 
-/* De-emphasized Terminated Queue End Labels on Right */
+.gate-label.locked,
+.track-gate-node.locked .gate-label {
+  color: #f87171 !important;
+  text-shadow: 0 0 8px rgba(248, 113, 113, 0.7) !important;
+}
+
+.gate-label.unlocked,
+.track-gate-node.unlocked .gate-label {
+  color: #34d399 !important;
+  text-shadow: 0 0 6px rgba(52, 211, 153, 0.4);
+}
+
 .track-terminated-label {
   position: absolute;
   right: 32px;
@@ -325,9 +321,6 @@
   top: 68%;
 }
 
-/* ==========================================================================
-   2. THE CRITICAL SECTION ZONE (EXECUTION REGION & SHARED MEMORY)
-   ========================================================================== */
 .critical-section-zone {
   position: absolute;
   left: 50%;
@@ -360,14 +353,12 @@
   }
 }
 
-/* Shockwave Flash on Collision / Lost Update */
 .critical-section-zone.vault-alarm-active {
   border-color: rgba(244, 63, 94, 0.85);
   box-shadow: 0 0 40px rgba(244, 63, 94, 0.35), 0 16px 40px rgba(0, 0, 0, 0.6);
   animation: none;
 }
 
-/* Repositioned CS Title: Placed Directly Below Bounding Box in Pure White Cursive Font */
 .cs-underneath-title {
   position: absolute;
   bottom: -32px;
@@ -401,7 +392,6 @@
   }
 }
 
-/* Left Sub-Zone: Execution Docking Bays Column */
 .cs-bays-column {
   display: flex;
   flex-direction: column;
@@ -412,7 +402,6 @@
   z-index: 2;
 }
 
-/* Recessed Execution Sockets (Tactile Inner & Soft Drop Shadow) */
 .docking-socket {
   height: 58px;
   border-radius: 14px;
@@ -442,9 +431,6 @@
   opacity: 0.7;
 }
 
-/* ==========================================================================
-   MEMORY BUS CONDUITS & CURRENCY PACKET ANIMATIONS
-   ========================================================================== */
 .cs-connectors-column {
   flex: 1;
   display: flex;
@@ -463,7 +449,6 @@
   position: relative;
 }
 
-/* Semi-transparent Memory Bus Conduit */
 .bus-conduit {
   width: 100%;
   height: 8px;
@@ -475,7 +460,6 @@
   overflow: visible;
 }
 
-/* Minimalist Currency Token flowing along the Memory Bus */
 .currency-token {
   position: absolute;
   top: 50%;
@@ -502,7 +486,6 @@
   white-space: nowrap;
 }
 
-/* Line 2 (Load): Flows from Vault (Right 100%) -> Bay (Left 0%) */
 .currency-token.flow-load {
   animation: currencyLoadFlow 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
@@ -528,7 +511,6 @@
   }
 }
 
-/* Line 4 (Store): Flows from Bay (Left 0%) -> Vault (Right 100%) */
 .currency-token.flow-store {
   animation: currencyStoreFlow 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
@@ -554,7 +536,6 @@
   }
 }
 
-/* Right Sub-Zone: Shared Vault (Shared Memory int balance) */
 .shared-vault-memory {
   width: 245px;
   height: 100%;
@@ -604,7 +585,6 @@
   font-weight: 700;
 }
 
-/* Odometer-Style Rolling Number Vault Balance (Significantly Increased Size) */
 .vault-balance-value {
   font-size: 4.4rem;
   font-weight: 900;
@@ -623,7 +603,6 @@
   opacity: 0.8;
 }
 
-/* Audit balance sub-bar */
 .vault-audit-stats {
   position: absolute;
   bottom: 18px;
@@ -647,9 +626,6 @@
   font-weight: 600;
 }
 
-/* ==========================================================================
-   5. PREMIUM TOAST ALERT (COLLISION / LOST UPDATE)
-   ========================================================================== */
 .lost-update-toast {
   position: absolute;
   top: 14px;
@@ -731,9 +707,6 @@
   opacity: 0.85;
 }
 
-/* ==========================================================================
-   3. ANIMATED PROCESS PODS (FLUID MOTION & NATURAL DECELERATION)
-   ========================================================================== */
 .animated-pod {
   position: absolute;
   width: 152px;
@@ -749,7 +722,6 @@
   z-index: 25;
   transition: transform 1.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.1s cubic-bezier(0.65, 0, 1, 1), box-shadow 0.3s ease;
   user-select: none;
-  /* border and box-shadow are applied directly via React inline style */
 }
 
 .animated-pod::before {
@@ -763,13 +735,10 @@
   pointer-events: none;
 }
 
-/* Base horizontal coordinate aligning perfectly with Bay socket */
 .animated-pod {
   left: calc(50% - 263px);
 }
 
-/* Positional Transform States */
-/* 0. Spawning / Entering (Glides in from far left entry track) */
 .animated-pod.pod-pos-spawning {
   animation: podEnterGlide 1.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
@@ -788,19 +757,16 @@
   }
 }
 
-/* 1. Ready (Resting on Entry Track, before gate) */
 .animated-pod.pod-pos-ready {
   transform: translateY(-50%) translateX(-280px);
   opacity: 1;
 }
 
-/* 2. In Bay (Docked inside Critical Section Bay) */
 .animated-pod.pod-pos-bay {
   transform: translateY(-50%) translateX(0px);
   opacity: 1;
 }
 
-/* 3. Terminated / Exiting (Glides out through right exit track) */
 .animated-pod.pod-pos-terminated {
   animation: podExitGlide 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   pointer-events: none;
@@ -825,7 +791,6 @@
   }
 }
 
-/* 4. Fading out before next spawn */
 .animated-pod.pod-fading {
   opacity: 0 !important;
 }
@@ -838,7 +803,7 @@
   height: 28px;
   border-radius: 7px;
   background: rgba(0, 0, 0, 0.25);
-  color: #111827; /* Dark text for contrast against colored background */
+  color: #111827; 
   font-weight: 600;
   font-size: 0.9rem;
 }
@@ -866,9 +831,6 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* ==========================================================================
-   4. BOTTOM PANELS (SEGMENTED CONTROLS & CUSTOM SLIDER)
-   ========================================================================== */
 .sim-bottom-panel {
   display: grid;
   grid-template-columns: 320px 1fr;
@@ -877,7 +839,6 @@
   min-height: 210px;
 }
 
-/* Controls Panel */
 .controls-panel {
   padding: 18px;
   display: flex;
@@ -922,7 +883,6 @@ legend {
   color: var(--text-secondary);
 }
 
-/* Modern Segmented Control Component */
 .segmented-control {
   display: flex;
   background: rgba(0, 0, 0, 0.45);
@@ -1004,7 +964,6 @@ legend {
   color: var(--text-primary);
 }
 
-/* Custom Speed Slider with Dynamic Fill Track & Tick Marks */
 .slider-wrapper {
   display: flex;
   flex-direction: column;
@@ -1083,7 +1042,6 @@ legend {
   font-weight: 600;
 }
 
-/* Full-Line Code Viewer & Terminal */
 .code-viewer-panel {
   padding: 18px 20px;
   display: flex;
@@ -1124,7 +1082,6 @@ legend {
   gap: 3px;
 }
 
-/* Full-Line Highlighting */
 .code-line {
   display: flex;
   align-items: center;

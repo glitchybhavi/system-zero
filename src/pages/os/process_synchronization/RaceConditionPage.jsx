@@ -1,3 +1,14 @@
+import { useState, useEffect, useCallback, useRef } from 'react';
+import {
+  ArenaTrackLayer,
+  ProcessPod,
+  CriticalSectionZone,
+  SimulationControls,
+  CodeViewer,
+  generateProcessColor,
+  INITIAL_BALANCE,
+  INCREMENT_VALUE,
+} from '../../../components/os/process_synchronization';
 // This Page showcases visualization of Race Condition or Critical Section Problem. 
 // A balance vault has been set as a critical section and user can see race condition occuring in both manual and auto mode. 
 // Expected and Loss currencies of all transactions are shown. User can even visualize live code while simulation is going on
@@ -241,6 +252,8 @@ export default function RaceConditionPage() {
     return () => clearInterval(interval);
   }, [mode, speed, proc0, proc1, stepTrack]);
 
+  const expectedBalance = INITIAL_BALANCE + completedCount * INCREMENT_VALUE;
+  const drift = Math.max(0, expectedBalance - sharedBalance);
   const getPodPosClass = (status) => {
     if (status === 'spawning') return 'pod-pos-spawning';
     if (status === 'ready') return 'pod-pos-ready';
@@ -261,6 +274,56 @@ export default function RaceConditionPage() {
   return (
     <section className="sim-container" aria-label="Race Condition Interactive Visualizer">
       <div className="sim-arena" role="region" aria-label="Conveyor Stage Arena">
+     
+        <ArenaTrackLayer gate0Locked={false} gate1Locked={false} />
+
+  
+        {proc0Exiting && (
+          <ProcessPod key={`proc-exit-${proc0Exiting.id}`} proc={proc0Exiting} track={0} isExiting={true} />
+        )}
+        <ProcessPod key={`proc-${proc0.id}`} proc={proc0} track={0} />
+
+        {proc1Exiting && (
+          <ProcessPod key={`proc-exit-${proc1Exiting.id}`} proc={proc1Exiting} track={1} isExiting={true} />
+        )}
+        <ProcessPod key={`proc-${proc1.id}`} proc={proc1} track={1} />
+
+        <CriticalSectionZone
+          proc0={proc0}
+          proc1={proc1}
+          busPacket0={busPacket0}
+          busPacket1={busPacket1}
+          sharedBalance={sharedBalance}
+          expectedBalance={expectedBalance}
+          drift={drift}
+          vaultPulse={vaultPulse}
+          alarmActive={alarmActive}
+        />
+      </div>
+
+    
+      <footer className="sim-bottom-panel">
+        <SimulationControls
+          mode={mode}
+          setMode={setMode}
+          speed={speed}
+          setSpeed={setSpeed}
+          onStepTrack={stepTrack}
+          proc0={proc0}
+          proc1={proc1}
+          maxLine0={5}
+          maxLine1={5}
+          onReset={resetSimulation}
+        />
+
+        <CodeViewer
+          title="deposit.c"
+          code={CODE_SNIPPET}
+          proc0={proc0}
+          proc1={proc1}
+          maxLine={4}
+          ariaLabel="Race Condition Source Code Trace"
+        />
         <div className="arena-track-layer" role="presentation">
           <div className="rail-conduit rail-conduit-entry rail-p0">
             <div className="pipe-glow-line" />

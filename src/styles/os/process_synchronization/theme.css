@@ -1,5 +1,4 @@
 :root {
-  /* Color Palette - Premium Dark Slate / Charcoal (Linear/Vercel/Apple Aesthetic) */
   --bg-base: #0d1117;
   --bg-canvas: #111827;
   --bg-surface: rgba(255, 255, 255, 0.03);
@@ -7,47 +6,42 @@
   --bg-surface-hover: rgba(255, 255, 255, 0.08);
   --bg-surface-active: rgba(255, 255, 255, 0.1);
 
-  /* Glassmorphism & Soft 1px Semi-Transparent Borders */
   --border-subtle: rgba(255, 255, 255, 0.08);
   --border-medium: rgba(255, 255, 255, 0.12);
   --border-glass: rgba(255, 255, 255, 0.15);
   --border-focus: rgba(255, 255, 255, 0.25);
 
-  /* Text Hierarchy */
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
   --text-inverse: #0d1117;
 
-  /* Process Colors - Muted & Elegant */
-  --p0-color: #ff8fa3; /* Soft Rose */
+  --p0-color: #ff8fa3; 
   --p0-glow: rgba(255, 143, 163, 0.2);
   --p0-subtle: rgba(255, 143, 163, 0.1);
   --p0-border: rgba(255, 143, 163, 0.3);
 
-  --p1-color: #6ee7b7; /* Soft Mint/Emerald */
+  --p1-color: #6ee7b7; 
   --p1-glow: rgba(110, 231, 183, 0.2);
   --p1-subtle: rgba(110, 231, 183, 0.1);
   --p1-border: rgba(110, 231, 183, 0.3);
 
-  /* Tactile Conduits & Recessed Sockets */
+
   --conduit-bg: rgba(255, 255, 255, 0.04);
   --conduit-border: rgba(255, 255, 255, 0.05);
   --socket-bg: rgba(0, 0, 0, 0.45);
   --socket-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.55);
   --socket-border: rgba(255, 255, 255, 0.06);
 
-  /* Gate Status Tokens */
+  
   --gate-unlocked-color: #34d399;
   --gate-unlocked-bg: rgba(0, 255, 100, 0.1);
   --gate-unlocked-border: rgba(52, 211, 153, 0.28);
 
-  /* Typography Stacks */
   --font-sans: -apple-system, BlinkMacSystemFont, "San Francisco", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-mono: "JetBrains Mono", "Fira Code", "SF Mono", monospace;
   --font-cursive: "Playfair Display", "Caveat", "Brush Script MT", "Apple Chancery", cursive;
 
-  /* Soft Ambient Shadows */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.5);
@@ -79,7 +73,6 @@ body:has(.app-layout) {
   overflow: hidden;
 }
 
-/* Glassmorphism Utilities */
 .glass-panel {
   background: var(--bg-surface);
   backdrop-filter: blur(16px);
