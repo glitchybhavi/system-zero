@@ -67,7 +67,7 @@
   color: #000;
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 20;
-  margin-top: -20px; /* Center on rail */
+  margin-top: -20px; 
   margin-left: -50px;
 }
 
@@ -80,7 +80,6 @@
 .pod-p0[data-state="1"] { left: 28%; top: 30%; }
 .pod-p1[data-state="1"] { left: 28%; top: 70%; }
 
-/* Inside Vault (Merged Track) */
 .pod-p0[data-state="2"], .pod-p0[data-state="3"], .pod-p0[data-state="4"] { top: 50%; transform: translateY(-22px); }
 .pod-p1[data-state="2"], .pod-p1[data-state="3"], .pod-p1[data-state="4"] { top: 50%; transform: translateY(22px); }
 

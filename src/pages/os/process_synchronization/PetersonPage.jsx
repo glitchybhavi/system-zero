@@ -84,8 +84,7 @@ export default function PetersonPage() {
     if (currentProc.line === 5) {
       flagRef.current[trackId] = false;
       syncFlagDisplay();
-
-      // When this process leaves the Critical Section and clears flag, unblock the other process if waiting
+      
       setOtherProc((other) => {
         if (other && other.status === 'waiting') {
           return { ...other, status: 'ready' };
@@ -249,9 +248,6 @@ export default function PetersonPage() {
   const expectedBalance = INITIAL_BALANCE + completedCount * INCREMENT_VALUE;
   const drift = Math.max(0, expectedBalance - sharedBalance);
 
-  // Peterson's mutual exclusion gate condition:
-  // Gate 0 is locked for P0 iff P0 wants to enter (flag[0]), P1 also wants to enter (flag[1]), and P0 yielded turn to P1 (turn === 1)
-  // Gate 1 is locked for P1 iff P1 wants to enter (flag[1]), P0 also wants to enter (flag[0]), and P1 yielded turn to P0 (turn === 0)
   const gate0Locked = flagDisplay[0] && flagDisplay[1] && turnDisplay === 1;
   const gate1Locked = flagDisplay[0] && flagDisplay[1] && turnDisplay === 0;
 
@@ -269,7 +265,7 @@ export default function PetersonPage() {
       `}</style>
 
       <div className="sim-arena" role="region" aria-label="Conveyor Stage Arena">
-        {/* Shared Synchronization Variables Display */}
+
         <aside
           aria-label="Shared Synchronization Variables"
           style={{
@@ -341,10 +337,8 @@ export default function PetersonPage() {
           </div>
         </aside>
 
-        {/* Common Track & Gate Layer */}
         <ArenaTrackLayer gate0Locked={gate0Locked} gate1Locked={gate1Locked} />
-
-        {/* Process Pods */}
+          
         {proc0Exiting && (
           <ProcessPod key={`proc-exit-${proc0Exiting.id}`} proc={proc0Exiting} track={0} isExiting={true} />
         )}
@@ -396,3 +390,4 @@ export default function PetersonPage() {
     </section>
   );
 }
+// Visualization for Peterson's solution page 

@@ -89,16 +89,12 @@
   border-radius: 50%;
   background: #ffffff;
 }
-
-/* Main Content Wrapper */
 .main-content {
   display: flex;
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
-}
 
-/* Header */
 .header {
   height: 58px;
   border-bottom: 1px solid var(--border-subtle);
@@ -887,7 +883,6 @@ legend {
   color: var(--text-secondary);
 }
 
-/* Modern Segmented Control Component */
 .segmented-control {
   display: flex;
   background: rgba(0, 0, 0, 0.45);
@@ -969,7 +964,6 @@ legend {
   color: var(--text-primary);
 }
 
-/* Custom Speed Slider with Dynamic Fill Track & Tick Marks */
 .slider-wrapper {
   display: flex;
   flex-direction: column;
@@ -1048,7 +1042,6 @@ legend {
   font-weight: 600;
 }
 
-/* Full-Line Code Viewer & Terminal */
 .code-viewer-panel {
   padding: 18px 20px;
   display: flex;
@@ -1089,7 +1082,6 @@ legend {
   gap: 3px;
 }
 
-/* Full-Line Highlighting */
 .code-line {
   display: flex;
   align-items: center;
