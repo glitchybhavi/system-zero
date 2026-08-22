@@ -1,0 +1,102 @@
+:root {
+  --bg-base: #0d1117;
+  --bg-canvas: #111827;
+  --bg-surface: rgba(255, 255, 255, 0.03);
+  --bg-surface-elevated: rgba(255, 255, 255, 0.06);
+  --bg-surface-hover: rgba(255, 255, 255, 0.08);
+  --bg-surface-active: rgba(255, 255, 255, 0.1);
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.12);
+  --border-glass: rgba(255, 255, 255, 0.15);
+  --border-focus: rgba(255, 255, 255, 0.25);
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-inverse: #0d1117;
+
+  --p0-color: #ff8fa3; 
+  --p0-glow: rgba(255, 143, 163, 0.2);
+  --p0-subtle: rgba(255, 143, 163, 0.1);
+  --p0-border: rgba(255, 143, 163, 0.3);
+
+  --p1-color: #6ee7b7; 
+  --p1-glow: rgba(110, 231, 183, 0.2);
+  --p1-subtle: rgba(110, 231, 183, 0.1);
+  --p1-border: rgba(110, 231, 183, 0.3);
+
+
+  --conduit-bg: rgba(255, 255, 255, 0.04);
+  --conduit-border: rgba(255, 255, 255, 0.05);
+  --socket-bg: rgba(0, 0, 0, 0.45);
+  --socket-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.55);
+  --socket-border: rgba(255, 255, 255, 0.06);
+
+  
+  --gate-unlocked-color: #34d399;
+  --gate-unlocked-bg: rgba(0, 255, 100, 0.1);
+  --gate-unlocked-border: rgba(52, 211, 153, 0.28);
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "San Francisco", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", "SF Mono", monospace;
+  --font-cursive: "Playfair Display", "Caveat", "Brush Script MT", "Apple Chancery", cursive;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.5);
+  --shadow-vault: 0 16px 40px rgba(0, 0, 0, 0.45);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  background-color: var(--bg-base);
+  background-image: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.03) 0%, transparent 60%);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body:has(.app-layout) {
+  overflow: hidden;
+}
+
+.glass-panel {
+  background: var(--bg-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+
+.glass-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 16px;
+  right: 16px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  pointer-events: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
