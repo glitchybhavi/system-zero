@@ -7,7 +7,7 @@ export const generateProcessColor = (hue = Math.floor(Math.random() * 360)) => {
 
 export const getPodPosClass = (status) => {
   if (status === 'spawning') return 'pod-pos-spawning';
-  if (status === 'ready' || status === 'waiting') return 'pod-pos-ready';
+  if (status === 'ready' || status === 'waiting' || status === 'busy-waiting') return 'pod-pos-ready';
   if (status === 'terminated') return 'pod-pos-terminated';
   return 'pod-pos-bay';
 };

@@ -3,66 +3,66 @@ export default function CodeViewer({
   code = [],
   proc0,
   proc1,
+  procs,
   maxLine = 5,
   ariaLabel = 'Source Code Execution Trace',
 }) {
-  const p0Line = proc0?.line ?? 0;
-  const p1Line = proc1?.line ?? 0;
-  const p0Done = p0Line > maxLine;
-  const p1Done = p1Line > maxLine;
+  const activeProcs = procs || [proc0, proc1].filter(Boolean);
 
   return (
     <figure className="code-viewer-panel glass-panel" aria-label={ariaLabel}>
       <header className="code-viewer-header">
         <span className="code-title">{title}</span>
-        <div className="code-thread-status">
-          <span
-            className="indicator-pill"
-            style={{
-              color: proc0?.color ?? 'var(--coral)',
-              fontSize: '0.9rem',
-              fontWeight: 600,
-              letterSpacing: '0.03em',
-            }}
-          >
-            P{proc0?.id ?? 0}: Line {!p0Done ? p0Line : 'Done'}
-          </span>
-          <span
-            className="indicator-pill"
-            style={{
-              color: proc1?.color ?? 'var(--mint)',
-              fontSize: '0.9rem',
-              fontWeight: 600,
-              letterSpacing: '0.03em',
-            }}
-          >
-            P{proc1?.id ?? 1}: Line {!p1Done ? p1Line : 'Done'}
-          </span>
+        <div className="code-thread-status" style={{ flexWrap: 'wrap', gap: '6px' }}>
+          {activeProcs.map((p) => {
+            const pLine = p?.line ?? 0;
+            const pDone = pLine > maxLine;
+            const pWait = p?.status === 'waiting';
+            return (
+              <span
+                key={p?.id ?? Math.random()}
+                className="indicator-pill"
+                style={{
+                  color: p?.color ?? 'var(--coral)',
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  border: `1px solid ${p?.color ?? '#ffffff'}40`,
+                  fontSize: '0.8rem',
+                  fontWeight: 600,
+                  letterSpacing: '0.02em',
+                }}
+              >
+                P{p?.id}: {pWait ? `Line ${pLine} (Wait)` : !pDone ? `Line ${pLine}` : 'Done'}
+              </span>
+            );
+          })}
         </div>
       </header>
 
       <div className="code-content">
         {code.map((item) => {
-          const p0Active = p0Line === item.line && !p0Done;
-          const p1Active = p1Line === item.line && !p1Done;
+          const matchingProcs = activeProcs.filter(
+            (p) => p && p.line === item.line && p.line <= maxLine
+          );
 
           let lineStyle = {};
 
-          if (p0Active && p1Active) {
+          if (matchingProcs.length === 1) {
+            const single = matchingProcs[0];
             lineStyle = {
-              background: `linear-gradient(90deg, ${proc0?.color}25 0%, ${proc0?.color}25 50%, ${proc1?.color}25 50%, ${proc1?.color}25 100%)`,
-              borderLeft: `3px solid ${proc0?.color}`,
-              borderRight: `3px solid ${proc1?.color}`,
+              background: `${single.color}22`,
+              borderLeft: `3px solid ${single.color}`,
             };
-          } else if (p0Active) {
+          } else if (matchingProcs.length > 1) {
+            const colorStops = matchingProcs.map(
+              (p, idx) =>
+                `${p.color}25 ${(idx / matchingProcs.length) * 100}%, ${p.color}25 ${
+                  ((idx + 1) / matchingProcs.length) * 100
+                }%`
+            );
             lineStyle = {
-              background: `${proc0?.color}20`,
-              borderLeft: `3px solid ${proc0?.color}`,
-            };
-          } else if (p1Active) {
-            lineStyle = {
-              background: `${proc1?.color}20`,
-              borderLeft: `3px solid ${proc1?.color}`,
+              background: `linear-gradient(90deg, ${colorStops.join(', ')})`,
+              borderLeft: `3px solid ${matchingProcs[0].color}`,
+              borderRight: `3px solid ${matchingProcs[matchingProcs.length - 1].color}`,
             };
           }
 
@@ -73,6 +73,26 @@ export default function CodeViewer({
                 {item.text}{' '}
                 {item.comment && <span className="comment">{item.comment}</span>}
               </span>
+              {matchingProcs.length > 0 && (
+                <div style={{ display: 'flex', gap: '4px', marginLeft: 'auto' }}>
+                  {matchingProcs.map((p) => (
+                    <span
+                      key={p.id}
+                      style={{
+                        fontSize: '0.68rem',
+                        fontWeight: 700,
+                        padding: '1px 5px',
+                        borderRadius: '4px',
+                        background: `${p.color}25`,
+                        color: p.color,
+                        border: `1px solid ${p.color}50`,
+                      }}
+                    >
+                      P{p.id}{p.status === 'waiting' ? ' ⏳' : ''}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
           );
         })}
