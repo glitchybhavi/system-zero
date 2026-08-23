@@ -1,8 +1,95 @@
-export default function ArenaTrackLayer({ gate0Locked = false, gate1Locked = false, tracks, singleBay = false, activeBay = 0 }) {
+export default function ArenaTrackLayer({
+  gate0Locked = false,
+  gate1Locked = false,
+  gate2Locked = false,
+  tracks,
+  singleBay = false,
+  multiBay = 1,
+  baysLocked = null,
+  activeBay = 0,
+}) {
   const trackList = tracks && Array.isArray(tracks) ? tracks : [
     { id: 0, top: '32%', locked: gate0Locked },
     { id: 1, top: '68%', locked: gate1Locked },
   ];
+
+  if (multiBay === 3) {
+    const topValues = trackList.map((t) => parseFloat(t.top));
+    const minTop = Math.min(...topValues, 14);
+    const maxTop = Math.max(...topValues, 86);
+    const bayTops = ['22%', '50%', '78%'];
+    const lockedArray = baysLocked || [gate0Locked, gate1Locked, gate2Locked];
+    const isAllLocked = lockedArray.every(Boolean);
+
+    return (
+      <div className="arena-track-layer" role="presentation">
+        <div
+          className={`funnel-vertical-spine ${isAllLocked ? 'locked' : 'unlocked'}`}
+          style={{
+            top: `${minTop}%`,
+            height: `${maxTop - minTop}%`,
+          }}
+        />
+
+        {bayTops.map((topVal, idx) => {
+          const isBayLocked = Boolean(lockedArray[idx]);
+          return (
+            <div
+              key={`funnel-entry-${idx}`}
+              className={`funnel-center-entry ${isBayLocked ? 'locked' : 'unlocked'}`}
+              style={{ top: topVal }}
+            />
+          );
+        })}
+
+        {bayTops.map((topVal, idx) => {
+          const isBayLocked = Boolean(lockedArray[idx]);
+          return (
+            <div
+              key={`gate-node-${idx}`}
+              className={`track-gate-node ${isBayLocked ? 'locked' : 'unlocked'}`}
+              style={{ top: topVal, left: 'calc(50% - 325px)' }}
+            >
+              <div className={`gate-pin ${isBayLocked ? 'locked' : 'unlocked'}`} />
+              <span className={`gate-label ${isBayLocked ? 'locked' : 'unlocked'}`}>
+                {isBayLocked ? 'Locked' : 'Unlocked'}
+              </span>
+            </div>
+          );
+        })}
+
+        {trackList.map((t, idx) => {
+          const topVal = t.top;
+          return (
+            <div key={`feeder-${t.id ?? idx}`}>
+              <div
+                className="rail-conduit rail-conduit-entry"
+                style={{ top: topVal, right: 'calc(50% + 325px)' }}
+              >
+                <div className="pipe-glow-line" />
+                <div className="pipe-ring ring-1" />
+                <div className="pipe-ring ring-2" />
+              </div>
+            </div>
+          );
+        })}
+
+        {bayTops.map((topVal, idx) => (
+          <div key={`exit-${idx}`} className="rail-conduit rail-conduit-exit" style={{ top: topVal }}>
+            <div className="pipe-glow-line" />
+            <div className="pipe-ring ring-1" />
+            <div className="pipe-ring ring-2" />
+          </div>
+        ))}
+
+        {bayTops.map((topVal, idx) => (
+          <span key={`term-${idx}`} className="track-terminated-label" style={{ top: topVal }}>
+            Terminated
+          </span>
+        ))}
+      </div>
+    );
+  }
 
   if (singleBay) {
     const topValues = trackList.map((t) => parseFloat(t.top));

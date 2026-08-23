@@ -32,12 +32,12 @@ const calculateTrackTop = (trackIndex, totalTracks) => {
 
 const generateSabotageMap = () => {
   const map = {};
-  const guaranteed = Math.floor(Math.random() * 10) + 6;
-  map[guaranteed] = Math.floor(Math.random() * 4) + 2;
+  const targetId = Math.floor(Math.random() * 10) + 6;
+  map[targetId] = Math.floor(Math.random() * 4) + 2;
 
-  for (let pid = 6; pid <= 15; pid++) {
-    if (pid !== guaranteed && Math.random() < 0.25) {
-      map[pid] = Math.floor(Math.random() * 4) + 2;
+  for (let id = 6; id <= 15; id++) {
+    if (id !== targetId && Math.random() < 0.25) {
+      map[id] = Math.floor(Math.random() * 4) + 2;
     }
   }
   return map;
@@ -51,12 +51,11 @@ export default function MutexPage() {
   const [completedCount, setCompletedCount] = useState(0);
   const [vaultPulse, setVaultPulse] = useState(false);
 
-  const [mutexAvailable, setMutexAvailable] = useState(true);
-  const [lockOwner, setLockOwner] = useState(null);
-  const [gateLocked, setGateLocked] = useState(false);
+  const [isLocked, setIsLocked] = useState(false);
+  const [activeOwnerId, setActiveOwnerId] = useState(null);
   const [waitQueue, setWaitQueue] = useState([]);
   const [sabotageMap, setSabotageMap] = useState(() => generateSabotageMap());
-  const [activeDelayRemaining, setActiveDelayRemaining] = useState(null);
+  const [activeDelay, setActiveDelay] = useState(null);
 
   const [procs, setProcs] = useState(() => {
     return Array.from({ length: 4 }, (_, i) => ({
@@ -68,7 +67,6 @@ export default function MutexPage() {
       status: 'ready',
       color: THREAD_COLORS[i % THREAD_COLORS.length],
       fading: false,
-      isSabotaged: false,
       stopwatch: null,
     }));
   });
@@ -81,39 +79,35 @@ export default function MutexPage() {
   const delayTimerRef = useRef(null);
   const isDelayingRef = useRef(false);
 
-  const mutexAvailableRef = useRef(true);
-  const lockOwnerRef = useRef(null);
-  const gateLockedRef = useRef(false);
+  const isLockedRef = useRef(false);
+  const activeOwnerIdRef = useRef(null);
   const waitQueueRef = useRef([]);
   const procsRef = useRef(procs);
   const sabotageMapRef = useRef(sabotageMap);
 
-  mutexAvailableRef.current = mutexAvailable;
-  lockOwnerRef.current = lockOwner;
-  gateLockedRef.current = gateLocked;
+  isLockedRef.current = isLocked;
+  activeOwnerIdRef.current = activeOwnerId;
   waitQueueRef.current = waitQueue;
   procsRef.current = procs;
   sabotageMapRef.current = sabotageMap;
 
-  const initSimulation = useCallback((activeLanes) => {
+  const initSimulation = useCallback((laneCount) => {
     if (delayTimerRef.current) clearInterval(delayTimerRef.current);
     delayTimerRef.current = null;
     isDelayingRef.current = false;
-    setActiveDelayRemaining(null);
+    setActiveDelay(null);
 
     const newMap = generateSabotageMap();
     setSabotageMap(newMap);
     sabotageMapRef.current = newMap;
 
-    nextPidRef.current = activeLanes;
-    mutexAvailableRef.current = true;
-    lockOwnerRef.current = null;
-    gateLockedRef.current = false;
+    nextPidRef.current = laneCount;
+    isLockedRef.current = false;
+    activeOwnerIdRef.current = null;
     waitQueueRef.current = [];
 
-    setMutexAvailable(true);
-    setLockOwner(null);
-    setGateLocked(false);
+    setIsLocked(false);
+    setActiveOwnerId(null);
     setWaitQueue([]);
     setSharedBalance(INITIAL_BALANCE);
     setCompletedCount(0);
@@ -121,16 +115,15 @@ export default function MutexPage() {
     setBusPacket({ type: null, id: 0, color: '', value: null });
     setExitingProcs([]);
 
-    const initial = Array.from({ length: activeLanes }, (_, i) => ({
+    const initial = Array.from({ length: laneCount }, (_, i) => ({
       id: i,
       track: i,
-      laneTop: calculateTrackTop(i, activeLanes),
+      laneTop: calculateTrackTop(i, laneCount),
       line: 1,
       local: null,
       status: 'ready',
       color: THREAD_COLORS[i % THREAD_COLORS.length],
       fading: false,
-      isSabotaged: Boolean(newMap[i]),
       stopwatch: null,
     }));
 
@@ -143,22 +136,22 @@ export default function MutexPage() {
     initSimulation(count);
   };
 
-  const executeCriticalSectionWrite = useCallback((ownerIndex, currentProcs) => {
-    const ownerProc = currentProcs[ownerIndex];
+  const writeCriticalSection = useCallback((ownerIndex, currentProcs) => {
+    const proc = currentProcs[ownerIndex];
     const writeVal = sharedBalance + INCREMENT_VALUE;
     setSharedBalance(writeVal);
     setVaultPulse(true);
     setTimeout(() => setVaultPulse(false), 500);
 
     if (animTimerRef.current) clearTimeout(animTimerRef.current);
-    setBusPacket({ type: 'store', id: Date.now(), color: ownerProc.color, value: writeVal });
+    setBusPacket({ type: 'store', id: Date.now(), color: proc.color, value: writeVal });
     animTimerRef.current = setTimeout(
       () => setBusPacket({ type: null, id: 0, color: '', value: null }),
       800
     );
 
     currentProcs[ownerIndex] = {
-      ...ownerProc,
+      ...proc,
       line: 3,
       local: writeVal,
       status: 'in-bay',
@@ -172,7 +165,7 @@ export default function MutexPage() {
     if (isDelayingRef.current) return;
 
     const currentProcs = [...procsRef.current];
-    const ownerId = lockOwnerRef.current;
+    const ownerId = activeOwnerIdRef.current;
 
     if (ownerId !== null) {
       const ownerIndex = currentProcs.findIndex((p) => p.id === ownerId);
@@ -186,7 +179,7 @@ export default function MutexPage() {
         if (delaySeconds && !ownerProc.delayCompleted) {
           isDelayingRef.current = true;
           let remaining = delaySeconds;
-          setActiveDelayRemaining(remaining);
+          setActiveDelay(remaining);
 
           currentProcs[ownerIndex] = {
             ...ownerProc,
@@ -197,7 +190,7 @@ export default function MutexPage() {
 
           delayTimerRef.current = setInterval(() => {
             remaining = Math.max(0, +(remaining - 0.2).toFixed(1));
-            setActiveDelayRemaining(remaining);
+            setActiveDelay(remaining);
 
             setProcs((prev) =>
               prev.map((p) =>
@@ -215,13 +208,13 @@ export default function MutexPage() {
               clearInterval(delayTimerRef.current);
               delayTimerRef.current = null;
               isDelayingRef.current = false;
-              setActiveDelayRemaining(null);
+              setActiveDelay(null);
 
               const latestProcs = [...procsRef.current];
               const latestOwnerIdx = latestProcs.findIndex((p) => p.id === ownerProc.id);
               if (latestOwnerIdx !== -1) {
                 latestProcs[latestOwnerIdx].delayCompleted = true;
-                executeCriticalSectionWrite(latestOwnerIdx, latestProcs);
+                writeCriticalSection(latestOwnerIdx, latestProcs);
               }
             }
           }, 200);
@@ -229,7 +222,7 @@ export default function MutexPage() {
           return;
         }
 
-        executeCriticalSectionWrite(ownerIndex, currentProcs);
+        writeCriticalSection(ownerIndex, currentProcs);
         return;
       }
 
@@ -260,17 +253,14 @@ export default function MutexPage() {
           status: 'ready',
           color: THREAD_COLORS[newId % THREAD_COLORS.length],
           fading: false,
-          isSabotaged: Boolean(sabotageMapRef.current[newId]),
           stopwatch: null,
         };
 
-        lockOwnerRef.current = null;
-        mutexAvailableRef.current = true;
-        gateLockedRef.current = false;
+        activeOwnerIdRef.current = null;
+        isLockedRef.current = false;
 
-        setLockOwner(null);
-        setMutexAvailable(true);
-        setGateLocked(false);
+        setActiveOwnerId(null);
+        setIsLocked(false);
 
         const sortedCandidates = currentProcs
           .filter((p) => p.status === 'ready' || p.status === 'waiting')
@@ -302,13 +292,11 @@ export default function MutexPage() {
           }
         });
 
-        lockOwnerRef.current = nextProc.id;
-        mutexAvailableRef.current = false;
-        gateLockedRef.current = true;
+        activeOwnerIdRef.current = nextProc.id;
+        isLockedRef.current = true;
 
-        setLockOwner(nextProc.id);
-        setMutexAvailable(false);
-        setGateLocked(true);
+        setActiveOwnerId(nextProc.id);
+        setIsLocked(true);
 
         currentProcs[nextIdx] = {
           ...currentProcs[nextIdx],
@@ -320,13 +308,13 @@ export default function MutexPage() {
         setProcs([...currentProcs]);
       }
     }
-  }, [sharedBalance, trackCount, executeCriticalSectionWrite]);
+  }, [trackCount, writeCriticalSection]);
 
-  const stepManualThread = useCallback((threadId) => {
+  const stepProcess = useCallback((processId) => {
     if (isDelayingRef.current) return;
 
     const currentProcs = [...procsRef.current];
-    const procIndex = currentProcs.findIndex((p) => p.id === threadId);
+    const procIndex = currentProcs.findIndex((p) => p.id === processId);
     if (procIndex === -1) return;
 
     const currentProc = currentProcs[procIndex];
@@ -339,7 +327,7 @@ export default function MutexPage() {
       return;
     }
 
-    if (mutexAvailableRef.current && lockOwnerRef.current === null) {
+    if (!isLockedRef.current && activeOwnerIdRef.current === null) {
       const sortedCandidates = currentProcs
         .filter((p) => p.status === 'ready' || p.status === 'waiting')
         .sort((a, b) => a.id - b.id);
@@ -357,13 +345,11 @@ export default function MutexPage() {
         }
       });
 
-      lockOwnerRef.current = lowestProc.id;
-      mutexAvailableRef.current = false;
-      gateLockedRef.current = true;
+      activeOwnerIdRef.current = lowestProc.id;
+      isLockedRef.current = true;
 
-      setLockOwner(lowestProc.id);
-      setMutexAvailable(false);
-      setGateLocked(true);
+      setActiveOwnerId(lowestProc.id);
+      setIsLocked(true);
 
       currentProcs[targetIdx] = {
         ...currentProcs[targetIdx],
@@ -413,8 +399,8 @@ export default function MutexPage() {
   const visualFifoOrder = [...waitQueue].reverse();
 
   return (
-    <section className="sim-container" aria-label="Mutex Lock Interactive Visualizer">
-      <div className="sim-arena" role="region" aria-label="Mutex Execution Arena">
+    <main className="sim-container" aria-label="Mutex Lock Interactive Visualizer">
+      <section className="sim-arena" aria-label="Mutex Execution Arena">
         <aside className="mutex-hud-panel" aria-label="Mutex Lock State HUD">
           <header className="mutex-hud-header">
             <span>Mutex State</span>
@@ -424,35 +410,28 @@ export default function MutexPage() {
                 width: '8px',
                 height: '8px',
                 borderRadius: '50%',
-                background: !gateLocked ? '#34d399' : '#f87171',
-                boxShadow: !gateLocked
+                background: !isLocked ? '#34d399' : '#f87171',
+                boxShadow: !isLocked
                   ? '0 0 8px rgba(52, 211, 153, 0.8)'
                   : '0 0 8px rgba(248, 113, 113, 0.8)',
               }}
             />
           </header>
+
           <div className="mutex-hud-row">
             <span style={{ color: '#94a3b8' }}>Gate</span>
-            <output
-              style={{
-                color: !gateLocked ? '#34d399' : '#f87171',
-                fontWeight: 700,
-              }}
-            >
-              {!gateLocked ? 'UNLOCKED' : 'LOCKED'}
+            <output style={{ color: !isLocked ? '#34d399' : '#f87171', fontWeight: 700 }}>
+              {!isLocked ? 'UNLOCKED' : 'LOCKED'}
             </output>
           </div>
+
           <div className="mutex-hud-row">
             <span style={{ color: '#94a3b8' }}>Lock Owner</span>
-            <output
-              style={{
-                color: lockOwner !== null ? procs.find((p) => p.id === lockOwner)?.color || '#38bdf8' : '#64748b',
-                fontWeight: 700,
-              }}
-            >
-              {lockOwner !== null ? `P${lockOwner}` : 'None'}
+            <output style={{ color: activeOwnerId !== null ? procs.find((p) => p.id === activeOwnerId)?.color || '#38bdf8' : '#64748b', fontWeight: 700 }}>
+              {activeOwnerId !== null ? `P${activeOwnerId}` : 'None'}
             </output>
           </div>
+
           <div className="mutex-hud-row">
             <span style={{ color: '#94a3b8' }}>Wait Queue</span>
             <output style={{ color: waitQueue.length > 0 ? '#f87171' : '#34d399', fontWeight: 700 }}>
@@ -460,15 +439,15 @@ export default function MutexPage() {
             </output>
           </div>
 
-          {activeDelayRemaining !== null && activeInBayProc && (
+          {activeDelay !== null && activeInBayProc && (
             <div className="sabotage-hud-badge" style={{ marginTop: '8px', borderColor: 'rgba(251, 191, 36, 0.6)', background: 'rgba(251, 191, 36, 0.15)', color: '#fde68a' }}>
-              <span> Lock Contention: P{activeInBayProc.id}</span>
-              <span>{activeDelayRemaining.toFixed(1)}s</span>
+              <span>⚡ Delay: P{activeInBayProc.id}</span>
+              <span>⏱️ {activeDelay.toFixed(1)}s</span>
             </div>
           )}
         </aside>
 
-        <ArenaTrackLayer gate0Locked={gateLocked} tracks={staticTracks} singleBay={true} />
+        <ArenaTrackLayer gate0Locked={isLocked} tracks={staticTracks} singleBay={true} />
 
         {exitingProcs.map((proc) => (
           <ProcessPod key={`exit-${proc.id}`} proc={{ ...proc, top: '50%' }} isExiting={true} />
@@ -496,7 +475,7 @@ export default function MutexPage() {
           bay0Label={activeInBayProc ? `Central Bay: P${activeInBayProc.id}` : 'Central Bay (Available)'}
         />
 
-        <div className={`mutex-queue-bar ${waitQueue.length > 0 ? 'has-items' : ''}`} role="region" aria-label="Mutex Wait Queue">
+        <section className={`mutex-queue-bar ${waitQueue.length > 0 ? 'has-items' : ''}`} aria-label="Mutex Wait Queue">
           <header className="mutex-queue-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span className="queue-next-indicator">WAIT QUEUE</span>
             <span
@@ -567,11 +546,11 @@ export default function MutexPage() {
               </>
             )}
           </div>
-        </div>
-      </div>
+        </section>
+      </section>
 
       <footer className="sim-bottom-panel">
-        <form className="controls-panel glass-panel" onSubmit={(e) => e.preventDefault()}>
+        <aside className="controls-panel glass-panel">
           <header className="control-section-header">Mutex Controls</header>
 
           <div className="control-group">
@@ -624,7 +603,7 @@ export default function MutexPage() {
                       type="button"
                       className="btn-track"
                       disabled={isDisabled}
-                      onClick={() => stepManualThread(p.id)}
+                      onClick={() => stepProcess(p.id)}
                       style={{
                         '--btn-border': p.color,
                         '--btn-color': p.color,
@@ -684,7 +663,7 @@ export default function MutexPage() {
           <button type="button" className="btn-reset" onClick={resetSimulation}>
             ↺ Reset Mutex Simulation (₹100)
           </button>
-        </form>
+        </aside>
 
         <CodeViewer
           title="mutex_lock.c"
@@ -694,6 +673,6 @@ export default function MutexPage() {
           ariaLabel="Mutex Lock Algorithm Code Trace"
         />
       </footer>
-    </section>
+    </main>
   );
 }

@@ -6,6 +6,8 @@ export default function CriticalSectionZone({
   activeProc,
   activeBay = 0,
   singleBay = false,
+  bays = null,
+  busPackets = null,
   busPacket0,
   busPacket1,
   sharedBalance,
@@ -19,6 +21,108 @@ export default function CriticalSectionZone({
   bay0Label,
   bay1Label,
 }) {
+  if (bays && Array.isArray(bays) && bays.length > 0) {
+    return (
+      <section
+        className={`critical-section-zone ${alarmActive ? 'vault-alarm-active' : ''}`}
+        aria-label="Critical Section Shared Memory Zone"
+      >
+        <div
+          className="cs-bays-column"
+          style={{
+            justifyContent: 'space-around',
+            gap: '6px',
+            padding: '2px 0',
+          }}
+          role="group"
+          aria-label="Multi Execution Docking Bays"
+        >
+          {bays.map((b, idx) => {
+            const isOccupied = Boolean(b.proc);
+            const bText = b.label || (isOccupied ? `Bay ${idx}: P${b.proc.id}` : `Bay ${idx} (Available)`);
+            const bColor = isOccupied ? b.proc.color : '#34d399';
+
+            return (
+              <article
+                key={`multi-bay-${idx}`}
+                className={`docking-socket socket-bay-${idx}`}
+                style={{
+                  height: bays.length === 3 ? '46px' : '56px',
+                  ...(isOccupied
+                    ? {
+                        borderColor: `${b.proc.color}80`,
+                        background: `${b.proc.color}20`,
+                        boxShadow: `0 0 16px ${b.proc.color}35`,
+                      }
+                    : {}),
+                }}
+              >
+                <span className="socket-bay-name" style={{ color: bColor, fontSize: '0.84rem' }}>
+                  {bText}
+                </span>
+                <span
+                  className="socket-status-dot"
+                  style={{
+                    background: bColor,
+                    boxShadow: isOccupied ? `0 0 10px ${b.proc.color}` : '0 0 6px #34d399',
+                  }}
+                />
+              </article>
+            );
+          })}
+        </div>
+
+        <div
+          className="cs-connectors-column"
+          style={{
+            justifyContent: 'space-around',
+            gap: '6px',
+            padding: '6px 0',
+          }}
+          role="presentation"
+        >
+          {bays.map((_, idx) => {
+            const pkt = busPackets?.[idx] || (idx === 0 ? busPacket0 : busPacket1);
+            return (
+              <div key={`conduit-wrap-${idx}`} className="bus-conduit-wrapper">
+                <div className="bus-conduit" style={{ height: '7px' }}>
+                  {pkt?.type && (
+                    <div key={`pkt-multi-${idx}-${pkt.id}`} className={`currency-token flow-${pkt.type}`}>
+                      <span
+                        className="currency-pill"
+                        style={pkt.color ? { borderColor: `${pkt.color}80`, color: pkt.color } : {}}
+                      >
+                        ₹{pkt.type === 'load' ? pkt.value : '10'}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <article
+          className={`shared-vault-memory ${vaultPulse ? 'pulse-update' : ''} ${alarmActive ? 'vault-alarm-flash' : ''}`}
+          aria-label={`${title} Storage`}
+        >
+          <header className="vault-title-label">{title}</header>
+          <AnimatedBalance value={sharedBalance} />
+          <span className="vault-variable-tag">{variableName}</span>
+
+          <footer className="vault-audit-stats">
+            <span className="expected-stat">Expected: ₹{expectedBalance}</span>
+            {drift > 0 && <span className="drift-stat">Lost: -₹{drift}</span>}
+          </footer>
+        </article>
+
+        <footer className={`cs-underneath-title ${alarmActive ? 'alarm-active' : ''}`}>
+          {csLabel}
+        </footer>
+      </section>
+    );
+  }
+
   if (singleBay) {
     const isOccupied = Boolean(activeProc);
     const bText = bay0Label || (isOccupied ? `Bay 0: P${activeProc.id} (Executing)` : 'Bay 0 (Available)');
@@ -30,7 +134,7 @@ export default function CriticalSectionZone({
         aria-label="Critical Section Shared Memory Zone"
       >
         <div className="cs-bays-column" style={{ justifyContent: 'center' }} role="group" aria-label="Single Central Execution Bay">
-          <div
+          <article
             className="docking-socket socket-p0"
             style={{
               height: '66px',
@@ -47,7 +151,7 @@ export default function CriticalSectionZone({
                 boxShadow: isOccupied ? `0 0 10px ${activeProc.color}` : '0 0 6px #34d399',
               }}
             />
-          </div>
+          </article>
         </div>
 
         <div className="cs-connectors-column" style={{ justifyContent: 'center' }} role="presentation">
@@ -100,7 +204,7 @@ export default function CriticalSectionZone({
       aria-label="Critical Section Shared Memory Zone"
     >
       <div className="cs-bays-column" role="group" aria-label="Execution Docking Bays">
-        <div
+        <article
           className="docking-socket socket-p0"
           style={isBay0Active ? { borderColor: `${activeProc.color}70`, background: `${activeProc.color}18`, boxShadow: `0 0 15px ${activeProc.color}25` } : {}}
         >
@@ -108,9 +212,9 @@ export default function CriticalSectionZone({
             {b0Text}
           </span>
           <span className="socket-status-dot" style={{ background: b0Color }} />
-        </div>
+        </article>
 
-        <div
+        <article
           className="docking-socket socket-p1"
           style={isBay1Active ? { borderColor: `${activeProc.color}70`, background: `${activeProc.color}18`, boxShadow: `0 0 15px ${activeProc.color}25` } : {}}
         >
@@ -118,7 +222,7 @@ export default function CriticalSectionZone({
             {b1Text}
           </span>
           <span className="socket-status-dot" style={{ background: b1Color }} />
-        </div>
+        </article>
       </div>
 
       <div className="cs-connectors-column" role="presentation">
