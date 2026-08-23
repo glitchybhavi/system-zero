@@ -4,6 +4,7 @@ import Layout from './components/shared/Layout';
 
 // Dynamic code-splitting: each page is compiled into its own isolated chunk
 const LandingPage = lazy(() => import('./pages/LandingPage'));
+const LaunchPage = lazy(() => import('./pages/LaunchPage'));
 const ProcessSync = lazy(() => import('./pages/os/process_synchronization/ProcessSync'));
 const ProcessSyncHub = lazy(() => import('./pages/os/process_synchronization/ProcessSyncHub'));
 const MutexPage = lazy(() => import('./pages/os/process_synchronization/MutexPage'));
@@ -43,6 +44,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<LandingPage />} />
+            <Route path="launch" element={<LaunchPage />} />
             <Route path="os/sync" element={<ProcessSync />}>
               <Route index element={<ProcessSyncHub />} />
               <Route path="mutex" element={<MutexPage />} />
