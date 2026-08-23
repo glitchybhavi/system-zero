@@ -442,8 +442,8 @@ export default function MutexPage() {
 
           {activeDelay !== null && activeInBayProc && (
             <div className="sabotage-hud-badge" style={{ marginTop: '8px', borderColor: 'rgba(251, 191, 36, 0.6)', background: 'rgba(251, 191, 36, 0.15)', color: '#fde68a' }}>
-              <span>⚡ Delay: P{activeInBayProc.id}</span>
-              <span>⏱️ {activeDelay.toFixed(1)}s</span>
+              <span>Contention: P{activeInBayProc.id}</span>
+              <span> {activeDelay.toFixed(1)}s</span>
             </div>
           )}
         </aside>

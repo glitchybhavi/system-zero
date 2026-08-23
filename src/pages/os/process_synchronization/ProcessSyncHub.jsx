@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import Footer from '../../../components/shared/Footer';
 
 export default function ProcessSyncHub() {
   const location = useLocation();
@@ -412,7 +411,6 @@ export default function ProcessSyncHub() {
           </p>
         </section>
       </article>
-      <Footer />
     </div>
   );
 }

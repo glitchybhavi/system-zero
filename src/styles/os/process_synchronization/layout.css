@@ -1,13 +1,43 @@
+.process-sync-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100vw;
+  background-color: var(--bg-base);
+  overflow-x: hidden;
+}
+
+.process-sync-root.is-sim-page {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.process-sync-root.is-sim-page .app-layout {
+  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.process-sync-root.is-sim-page .main-content {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.process-sync-root.is-sim-page .page-wrapper {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 .app-layout {
   display: grid;
   grid-template-columns: 230px 1fr;
-  height: 100vh;
-  width: 100vw;
+  min-height: 100vh;
+  width: 100%;
   background-color: var(--bg-base);
-  overflow: hidden;
   padding-top: 0;
   box-sizing: border-box;
 }
+
 
 @media (max-width: 768px) {
   .app-layout {
@@ -18,6 +48,7 @@
   }
 }
 
+
 .sidebar {
   border-right: 1px solid var(--border-subtle);
   padding: 24px 16px;
@@ -26,6 +57,8 @@
   gap: 24px;
   background: rgba(10, 14, 23, 0.96);
   z-index: 30;
+  position: sticky;
+  top: 0;
   height: 100vh;
   overflow-y: auto;
   box-sizing: border-box;
@@ -114,8 +147,7 @@
 .main-content {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
   min-width: 0;
   box-sizing: border-box;
 }
@@ -160,13 +192,12 @@
 .page-wrapper {
   flex: 1;
   padding: 8px 24px 16px;
-  overflow-y: auto;
-  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   min-height: 0;
   box-sizing: border-box;
 }
+
 
 .page-wrapper::-webkit-scrollbar {
   width: 6px;
