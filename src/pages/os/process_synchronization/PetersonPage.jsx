@@ -11,11 +11,11 @@ import {
 } from '../../../components/os/process_synchronization';
 
 const PETERSON_CODE = [
-  { line: 1, text: 'flag[i] = true;', comment: '// Declare intent' },
-  { line: 2, text: 'turn = 1 - i;', comment: '// Yield priority' },
-  { line: 3, text: 'while (flag[1-i] && turn == 1-i);', comment: '// Busy-wait' },
-  { line: 4, text: 'balance = balance + 10;', comment: '// Critical section' },
-  { line: 5, text: 'flag[i] = false;', comment: '// Release' },
+  { line: 1, text: 'flag[i] = true;' },
+  { line: 2, text: 'turn = 1 - i;' },
+  { line: 3, text: 'while (flag[1-i] && turn == 1-i);' },
+  { line: 4, text: 'balance = balance + 10;' },
+  { line: 5, text: 'flag[i] = false;' },
 ];
 
 export default function PetersonPage() {
@@ -84,7 +84,7 @@ export default function PetersonPage() {
     if (currentProc.line === 5) {
       flagRef.current[trackId] = false;
       syncFlagDisplay();
-      
+
       setOtherProc((other) => {
         if (other && other.status === 'waiting') {
           return { ...other, status: 'ready' };
@@ -126,7 +126,6 @@ export default function PetersonPage() {
       turnRef.current = 1 - trackId;
       syncTurnDisplay();
 
-      // If the other process was waiting and now priority is transferred, unblock it
       setOtherProc((other) => {
         if (other && other.status === 'waiting') {
           return { ...other, status: 'ready' };
@@ -250,22 +249,19 @@ export default function PetersonPage() {
 
   const gate0Locked = flagDisplay[0] && flagDisplay[1] && turnDisplay === 1;
   const gate1Locked = flagDisplay[0] && flagDisplay[1] && turnDisplay === 0;
+  const isGateLocked = gate0Locked || gate1Locked || proc0.status === 'in-bay' || proc1.status === 'in-bay';
+
+  const activeInBay = proc0.status === 'in-bay' ? proc0 : proc1.status === 'in-bay' ? proc1 : null;
+  const activePacket = busPacket0.type ? busPacket0 : busPacket1;
+
+  const staticTracks = [
+    { id: 0, top: '34%', locked: gate0Locked },
+    { id: 1, top: '66%', locked: gate1Locked },
+  ];
 
   return (
     <section className="sim-container" aria-label="Peterson's Algorithm Interactive Visualizer">
-      <style>{`
-        .pod-state-pill.waiting {
-          color: #f87171 !important;
-          animation: pulse-wait 1.5s ease-in-out infinite;
-        }
-        @keyframes pulse-wait {
-          0%, 100% { opacity: 1; text-shadow: 0 0 12px rgba(248,113,113,0.6); }
-          50% { opacity: 0.5; text-shadow: none; }
-        }
-      `}</style>
-
       <div className="sim-arena" role="region" aria-label="Conveyor Stage Arena">
-
         <aside
           aria-label="Shared Synchronization Variables"
           style={{
@@ -337,33 +333,44 @@ export default function PetersonPage() {
           </div>
         </aside>
 
-        <ArenaTrackLayer gate0Locked={gate0Locked} gate1Locked={gate1Locked} />
-          
+        <ArenaTrackLayer gate0Locked={isGateLocked} tracks={staticTracks} singleBay={true} />
+
         {proc0Exiting && (
-          <ProcessPod key={`proc-exit-${proc0Exiting.id}`} proc={proc0Exiting} track={0} isExiting={true} />
+          <ProcessPod key={`proc-exit-${proc0Exiting.id}`} proc={{ ...proc0Exiting, top: '50%' }} isExiting={true} />
         )}
-        <ProcessPod key={`proc-${proc0.id}`} proc={proc0} track={0} />
+        <ProcessPod
+          key={`proc-${proc0.id}`}
+          proc={{ ...proc0, top: proc0.status === 'in-bay' ? '50%' : '34%' }}
+        />
 
         {proc1Exiting && (
-          <ProcessPod key={`proc-exit-${proc1Exiting.id}`} proc={proc1Exiting} track={1} isExiting={true} />
+          <ProcessPod key={`proc-exit-${proc1Exiting.id}`} proc={{ ...proc1Exiting, top: '50%' }} isExiting={true} />
         )}
-        <ProcessPod key={`proc-${proc1.id}`} proc={proc1} track={1} />
+        <ProcessPod
+          key={`proc-${proc1.id}`}
+          proc={{ ...proc1, top: proc1.status === 'in-bay' ? '50%' : '66%' }}
+        />
 
-        {/* Critical Section Zone with Shared Vault */}
         <CriticalSectionZone
-          proc0={proc0}
-          proc1={proc1}
-          busPacket0={busPacket0}
-          busPacket1={busPacket1}
+          activeProc={activeInBay}
+          singleBay={true}
+          busPacket0={activePacket}
           sharedBalance={sharedBalance}
           expectedBalance={expectedBalance}
           drift={drift}
           vaultPulse={vaultPulse}
           alarmActive={alarmActive}
+          title="Shared Vault"
+          variableName="Balance"
+          csLabel="Critical Section"
+          bay0Label={
+            activeInBay
+              ? `Central Bay: P${activeInBay.id} (Executing)`
+              : 'Central Bay (Available)'
+          }
         />
       </div>
 
-      {/* Bottom Panel: Controls & Synchronized Code Viewer */}
       <footer className="sim-bottom-panel">
         <SimulationControls
           mode={mode}
@@ -390,4 +397,3 @@ export default function PetersonPage() {
     </section>
   );
 }
-// Visualization for Peterson's solution page 
