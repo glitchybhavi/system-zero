@@ -247,10 +247,10 @@ export default function SemaphorePage() {
                 prev.map((proc) =>
                   proc.id === p.id
                     ? {
-                        ...proc,
-                        stopwatch: rem > 0 ? `${rem.toFixed(1)}s` : null,
-                        statusText: rem > 0 ? `HOLDING BAY (${rem.toFixed(1)}s)` : 'EXECUTING',
-                      }
+                      ...proc,
+                      stopwatch: rem > 0 ? `${rem.toFixed(1)}s` : null,
+                      statusText: rem > 0 ? `HOLDING BAY (${rem.toFixed(1)}s)` : 'EXECUTING',
+                    }
                     : proc
                 )
               );
@@ -263,14 +263,14 @@ export default function SemaphorePage() {
                   prev.map((proc) =>
                     proc.id === p.id
                       ? {
-                          ...proc,
-                          delayCompleted: true,
-                          line: 3,
-                          local: sharedBalanceRef.current + INCREMENT_VALUE,
-                          status: 'in-bay',
-                          statusText: 'EXECUTING',
-                          stopwatch: null,
-                        }
+                        ...proc,
+                        delayCompleted: true,
+                        line: 3,
+                        local: sharedBalanceRef.current + INCREMENT_VALUE,
+                        status: 'in-bay',
+                        statusText: 'EXECUTING',
+                        stopwatch: null,
+                      }
                       : proc
                   )
                 );

@@ -196,10 +196,10 @@ export default function MutexPage() {
               prev.map((p) =>
                 p.id === ownerProc.id
                   ? {
-                      ...p,
-                      stopwatch: remaining > 0 ? `${remaining.toFixed(1)}s` : null,
-                      statusText: remaining > 0 ? `HOLDING LOCK (${remaining.toFixed(1)}s)` : 'EXECUTING',
-                    }
+                    ...p,
+                    stopwatch: remaining > 0 ? `${remaining.toFixed(1)}s` : null,
+                    statusText: remaining > 0 ? `HOLDING LOCK (${remaining.toFixed(1)}s)` : 'EXECUTING',
+                  }
                   : p
               )
             );

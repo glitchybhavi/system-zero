@@ -1,26 +1,44 @@
 import { useLocation } from 'react-router-dom';
 
-const ROUTE_TITLES = {
-  'race-condition': 'The Lost Update Problem (Race Condition)',
-  'peterson': "Software Synchronization: Peterson's Algorithm",
-  'mutex': 'Hardware Synchronization: Mutex Locks',
-  'semaphore': 'Signaling Mechanisms: Counting Semaphores',
+const ROUTE_INFO = {
+  'race-condition': {
+    category: 'Concurrency Anomaly',
+    title: 'The Lost Update Problem',
+  },
+  'peterson': {
+    category: 'Software Synchronization',
+    title: "Peterson's Algorithm",
+  },
+  'mutex': {
+    category: 'Hardware Synchronization',
+    title: 'Mutex Locks',
+  },
+  'semaphore': {
+    category: 'Signaling Mechanisms',
+    title: 'Counting Semaphores',
+  },
 };
 
 export default function Header() {
   const { pathname } = useLocation();
-  
-  const getHeaderTitle = () => {
-    for (const [key, title] of Object.entries(ROUTE_TITLES)) {
-      if (pathname.includes(key)) return title;
+
+  const getHeaderInfo = () => {
+    for (const [key, info] of Object.entries(ROUTE_INFO)) {
+      if (pathname.includes(key)) return info;
     }
-    return 'Process Synchronization Hub';
+    return {
+      category: 'Process Synchronization',
+      title: 'Overview Hub',
+    };
   };
+
+  const info = getHeaderInfo();
 
   return (
     <header className="header" role="banner">
       <div className="header-title-group">
-        <h1>{getHeaderTitle()}</h1>
+        <span className="header-category-label">{info.category}</span>
+        <h1>{info.title}</h1>
       </div>
     </header>
   );
