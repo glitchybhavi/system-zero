@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import Lenis from '@studio-freight/lenis';
 import Hero from '../components/landing/Hero';
 import Content from '../components/landing/Content';
+import Footer from '../components/shared/Footer';
 
 export default function LandingPage() {
   useEffect(() => {
@@ -34,6 +35,8 @@ export default function LandingPage() {
     <>
       <Hero />
       <Content />
+      <Footer />
     </>
   );
 }
+
