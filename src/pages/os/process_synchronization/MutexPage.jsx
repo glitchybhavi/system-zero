@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import {
   ArenaTrackLayer,
   ProcessPod,
@@ -399,7 +400,7 @@ export default function MutexPage() {
   const visualFifoOrder = [...waitQueue].reverse();
 
   return (
-    <main className="sim-container" aria-label="Mutex Lock Interactive Visualizer">
+    <section className="sim-container" aria-label="Mutex Lock Interactive Visualizer">
       <section className="sim-arena" aria-label="Mutex Execution Arena">
         <aside className="mutex-hud-panel" aria-label="Mutex Lock State HUD">
           <header className="mutex-hud-header">
@@ -673,6 +674,14 @@ export default function MutexPage() {
           ariaLabel="Mutex Lock Algorithm Code Trace"
         />
       </footer>
-    </main>
+
+      <Link to="/os/sync#semaphores" className="continue-reading-btn" title="Continue to Semaphores section">
+        <span>Continue Reading: Semaphores</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M5 12h14" />
+          <path d="m12 5 7 7-7 7" />
+        </svg>
+      </Link>
+    </section>
   );
 }
