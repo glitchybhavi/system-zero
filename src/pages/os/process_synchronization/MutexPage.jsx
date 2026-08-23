@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import {
   ArenaTrackLayer,
   ProcessPod,
@@ -196,10 +197,10 @@ export default function MutexPage() {
               prev.map((p) =>
                 p.id === ownerProc.id
                   ? {
-                      ...p,
-                      stopwatch: remaining > 0 ? `${remaining.toFixed(1)}s` : null,
-                      statusText: remaining > 0 ? `HOLDING LOCK (${remaining.toFixed(1)}s)` : 'EXECUTING',
-                    }
+                    ...p,
+                    stopwatch: remaining > 0 ? `${remaining.toFixed(1)}s` : null,
+                    statusText: remaining > 0 ? `HOLDING LOCK (${remaining.toFixed(1)}s)` : 'EXECUTING',
+                  }
                   : p
               )
             );
@@ -399,7 +400,7 @@ export default function MutexPage() {
   const visualFifoOrder = [...waitQueue].reverse();
 
   return (
-    <main className="sim-container" aria-label="Mutex Lock Interactive Visualizer">
+    <section className="sim-container" aria-label="Mutex Lock Interactive Visualizer">
       <section className="sim-arena" aria-label="Mutex Execution Arena">
         <aside className="mutex-hud-panel" aria-label="Mutex Lock State HUD">
           <header className="mutex-hud-header">
@@ -441,8 +442,8 @@ export default function MutexPage() {
 
           {activeDelay !== null && activeInBayProc && (
             <div className="sabotage-hud-badge" style={{ marginTop: '8px', borderColor: 'rgba(251, 191, 36, 0.6)', background: 'rgba(251, 191, 36, 0.15)', color: '#fde68a' }}>
-              <span>⚡ Delay: P{activeInBayProc.id}</span>
-              <span>⏱️ {activeDelay.toFixed(1)}s</span>
+              <span>Contention: P{activeInBayProc.id}</span>
+              <span> {activeDelay.toFixed(1)}s</span>
             </div>
           )}
         </aside>
@@ -673,6 +674,14 @@ export default function MutexPage() {
           ariaLabel="Mutex Lock Algorithm Code Trace"
         />
       </footer>
-    </main>
+
+      <Link to="/os/sync#semaphores" className="continue-reading-btn" title="Continue to Semaphores section">
+        <span>Continue Reading: Semaphores</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M5 12h14" />
+          <path d="m12 5 7 7-7 7" />
+        </svg>
+      </Link>
+    </section>
   );
 }

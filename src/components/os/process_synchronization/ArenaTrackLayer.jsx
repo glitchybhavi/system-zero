@@ -100,17 +100,18 @@ export default function ArenaTrackLayer({
     return (
       <div className="arena-track-layer" role="presentation">
         <div
-          className="funnel-vertical-spine"
+          className={`funnel-vertical-spine ${isLocked ? 'locked' : 'unlocked'}`}
           style={{
             top: `${minTop}%`,
             height: `${maxTop - minTop}%`,
           }}
         />
 
-        <div className="funnel-center-entry" />
+        <div className={`funnel-center-entry ${isLocked ? 'locked' : 'unlocked'}`} />
 
         <div
           className={`track-gate-node ${isLocked ? 'locked' : 'unlocked'}`}
+
           style={{ top: '50%', left: 'calc(50% - 325px)' }}
         >
           <div className={`gate-pin ${isLocked ? 'locked' : 'unlocked'}`} />

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import {
   ArenaTrackLayer,
   ProcessPod,
@@ -247,10 +248,10 @@ export default function SemaphorePage() {
                 prev.map((proc) =>
                   proc.id === p.id
                     ? {
-                        ...proc,
-                        stopwatch: rem > 0 ? `${rem.toFixed(1)}s` : null,
-                        statusText: rem > 0 ? `HOLDING BAY (${rem.toFixed(1)}s)` : 'EXECUTING',
-                      }
+                      ...proc,
+                      stopwatch: rem > 0 ? `${rem.toFixed(1)}s` : null,
+                      statusText: rem > 0 ? `HOLDING BAY (${rem.toFixed(1)}s)` : 'EXECUTING',
+                    }
                     : proc
                 )
               );
@@ -263,14 +264,14 @@ export default function SemaphorePage() {
                   prev.map((proc) =>
                     proc.id === p.id
                       ? {
-                          ...proc,
-                          delayCompleted: true,
-                          line: 3,
-                          local: sharedBalanceRef.current + INCREMENT_VALUE,
-                          status: 'in-bay',
-                          statusText: 'EXECUTING',
-                          stopwatch: null,
-                        }
+                        ...proc,
+                        delayCompleted: true,
+                        line: 3,
+                        local: sharedBalanceRef.current + INCREMENT_VALUE,
+                        status: 'in-bay',
+                        statusText: 'EXECUTING',
+                        stopwatch: null,
+                      }
                       : proc
                   )
                 );
@@ -530,7 +531,7 @@ export default function SemaphorePage() {
   const isGateLocked = semCount === 0;
 
   return (
-    <main className="sim-container" aria-label="Counting Semaphore Interactive Visualizer">
+    <section className="sim-container" aria-label="Counting Semaphore Interactive Visualizer">
       <section className="sim-arena" aria-label="Counting Semaphore Execution Arena">
         <aside className="mutex-hud-panel" aria-label="Semaphore State HUD">
           <header className="mutex-hud-header">
@@ -851,6 +852,14 @@ export default function SemaphorePage() {
           ariaLabel="Counting Semaphore Algorithm Code Trace"
         />
       </footer>
-    </main>
+
+      <Link to="/os/sync#conditional-variables" className="continue-reading-btn" title="Continue to Conditional Variables section">
+        <span>Continue Reading: Conditional Variables</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M5 12h14" />
+          <path d="m12 5 7 7-7 7" />
+        </svg>
+      </Link>
+    </section>
   );
 }

@@ -3,6 +3,7 @@
 // Expected and Loss currencies of all transactions are shown. User can even visualize live code while simulation is going on
 
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import {
   ArenaTrackLayer,
   ProcessPod,
@@ -296,6 +297,14 @@ export default function RaceConditionPage() {
           ariaLabel="Race Condition Source Code Trace"
         />
       </footer>
+
+      <Link to="/os/sync#petersons-solution" className="continue-reading-btn" title="Continue to Peterson's Solution section">
+        <span>Continue Reading: Peterson&apos;s Solution</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M5 12h14" />
+          <path d="m12 5 7 7-7 7" />
+        </svg>
+      </Link>
     </section>
   );
 }
