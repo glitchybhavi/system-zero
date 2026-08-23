@@ -1,0 +1,137 @@
+/* ==========================================================================
+   PROCESS MANAGEMENT PAGE — Breadcrumb & Prev/Next Navigation
+   Matches the main app's dark theme palette
+   ========================================================================== */
+
+.pm-page-root {
+  min-height: 100vh;
+  background-color: #14181A;
+}
+
+/* ---------- Breadcrumb ---------- */
+.pm-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 80px 36px 0;
+  max-width: 1560px;
+  margin: 0 auto;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+.pm-breadcrumb-link {
+  color: #8A9088;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.pm-breadcrumb-link:hover {
+  color: #D9DBD4;
+}
+
+.pm-breadcrumb-sep {
+  color: rgba(255, 255, 255, 0.2);
+  user-select: none;
+}
+
+.pm-breadcrumb-current {
+  color: #D9DBD4;
+  font-weight: 600;
+}
+
+/* ---------- Prev / Next Navigation ---------- */
+.pm-prev-next {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 0 36px 60px;
+}
+
+.pm-nav-side {
+  flex: 1;
+  display: flex;
+}
+
+.pm-nav-side:last-child {
+  justify-content: flex-end;
+}
+
+.pm-nav-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background-color: #1D2326;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  text-decoration: none;
+  min-width: 240px;
+  max-width: 380px;
+  transition: var(--transition-fast);
+}
+
+.pm-nav-card:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  background-color: #242C30;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.pm-nav-direction {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #4C7EA8;
+}
+
+.pm-nav-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #D9DBD4;
+  line-height: 1.4;
+}
+
+.pm-nav-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: #8A9088;
+  background-color: rgba(255, 255, 255, 0.06);
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  width: fit-content;
+  letter-spacing: 0.04em;
+}
+
+.pm-nav-next {
+  text-align: right;
+  align-items: flex-end;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .pm-breadcrumb {
+    padding: 70px 20px 0;
+    font-size: 12px;
+  }
+
+  .pm-prev-next {
+    flex-direction: column;
+    padding: 0 20px 40px;
+    gap: 16px;
+  }
+
+  .pm-nav-card {
+    min-width: unset;
+    max-width: unset;
+    width: 100%;
+  }
+
+  .pm-nav-next {
+    text-align: left;
+    align-items: flex-start;
+  }
+}

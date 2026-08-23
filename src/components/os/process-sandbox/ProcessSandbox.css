@@ -1,0 +1,1120 @@
+/* ==========================================================================
+   SYSTEM ZERO — Process Management Sandbox Stylesheet (Spacious Dark Theme)
+   Palette: Background (#14181A), Cards (#1D2326 / #242C30), Text (#D9DBD4), Captions (#8A9088)
+   Accents: Green (#3FA66B), Blue (#4C7EA8), Amber (#D98F3E), Gray (#8B8B82)
+   ========================================================================== */
+
+.process-sandbox-root {
+  background-color: #14181A;
+  color: #D9DBD4;
+  min-height: 100vh;
+  padding: 120px 36px 100px;
+  max-width: 1560px;
+  margin: 0 auto;
+  font-family: var(--font-body);
+}
+
+/* ==========================================================================
+   1. SANDBOX HEADER & TOOLBAR (Spacious Layout)
+   ========================================================================== */
+.sandbox-header-bar {
+  background-color: #1D2326;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 32px 36px;
+  margin-bottom: 36px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
+.header-brand-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding-bottom: 26px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 28px;
+}
+
+.brand-badge-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 680px;
+}
+
+.kernel-pill {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  color: #4C7EA8;
+  text-transform: uppercase;
+}
+
+.sandbox-main-title {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.header-description {
+  font-size: 16px;
+  color: #8A9088;
+  margin: 4px 0 0;
+  line-height: 1.5;
+}
+
+.header-stats-strip {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.stat-pill {
+  background-color: #14181A;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 10px 18px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stat-label {
+  color: #8A9088;
+}
+
+.stat-val {
+  font-weight: 700;
+  color: #D9DBD4;
+}
+
+.highlight-cyan {
+  color: #38bdf8;
+}
+
+/* Controls Strip */
+.sandbox-controls-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 32px;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.control-group-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #8A9088;
+}
+
+.control-caption {
+  font-size: 13px;
+  color: #8A9088;
+  line-height: 1.45;
+}
+
+.clock-btn-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.clock-btn {
+  background-color: #14181A;
+  color: #D9DBD4;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.clock-btn:hover {
+  background-color: #242C30;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.clock-btn.is-running {
+  background-color: #3FA66B;
+  color: #FFFFFF;
+  border-color: #3FA66B;
+}
+
+.speed-pills {
+  display: flex;
+  background-color: #14181A;
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.speed-pill {
+  background: transparent;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #8A9088;
+}
+
+.speed-pill.is-active {
+  background-color: #D9DBD4;
+  color: #14181A;
+}
+
+.algo-selector-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.algo-buttons {
+  display: flex;
+  gap: 6px;
+  background-color: #14181A;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.algo-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #8A9088;
+  transition: var(--transition-fast);
+}
+
+.algo-btn.is-active {
+  background-color: #242C30;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.quantum-slider-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #14181A;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.quantum-label-row {
+  display: flex;
+  gap: 6px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.quantum-val {
+  font-weight: 700;
+  color: #4C7EA8;
+}
+
+.quantum-slider {
+  flex: 1;
+  accent-color: #4C7EA8;
+  cursor: pointer;
+}
+
+.action-buttons-row {
+  display: flex;
+  gap: 12px;
+}
+
+.util-btn {
+  background-color: #14181A;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-sm);
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #D9DBD4;
+  transition: var(--transition-fast);
+}
+
+.util-btn:hover {
+  background-color: #242C30;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ==========================================================================
+   2. SPACIOUS SINGLE-SCREEN GRID LAYOUT
+   ========================================================================== */
+.sandbox-single-screen-grid {
+  display: grid;
+  grid-template-columns: 500px 1fr;
+  gap: 36px;
+  align-items: flex-start;
+  margin-bottom: 48px;
+}
+
+@media (max-width: 1140px) {
+  .sandbox-single-screen-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+.sandbox-col-left, .sandbox-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* ==========================================================================
+   3. PANELS (Generous Padding & Breathing Room)
+   ========================================================================== */
+.sandbox-panel {
+  background-color: #1D2326;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 30px 32px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.panel-title {
+  font-size: 21px;
+  font-weight: 700;
+  margin: 0 0 4px;
+  color: #FFFFFF;
+  letter-spacing: -0.01em;
+}
+
+.panel-caption {
+  font-size: 14px;
+  color: #8A9088;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   4. SPAWNER PANEL
+   ========================================================================== */
+.starvation-warning-banner {
+  background-color: rgba(217, 83, 79, 0.15);
+  border: 1px solid #D9534F;
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  display: flex;
+  gap: 14px;
+  margin-bottom: 24px;
+  color: #fca5a5;
+}
+
+.warning-icon {
+  font-size: 22px;
+}
+
+.warning-text strong {
+  display: block;
+  font-size: 14px;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.warning-text p {
+  font-size: 13px;
+  margin: 0;
+  color: #fca5a5;
+  line-height: 1.45;
+}
+
+.preset-selector-section {
+  margin-bottom: 24px;
+}
+
+.section-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #8A9088;
+  margin-bottom: 12px;
+}
+
+.preset-buttons-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.preset-btn {
+  background-color: #14181A;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+  transition: var(--transition-fast);
+  color: #D9DBD4;
+}
+
+.preset-btn:hover:not(:disabled) {
+  background-color: #242C30;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.preset-btn.is-selected {
+  background-color: #242C30;
+  color: #FFFFFF;
+  border-color: #4C7EA8;
+}
+
+.preset-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.spawner-form .form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #D9DBD4;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.form-input {
+  width: 100%;
+  background-color: #14181A;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #FFFFFF;
+  outline: none;
+  font-family: var(--font-mono);
+  transition: var(--transition-fast);
+}
+
+.form-input:focus {
+  border-color: #4C7EA8;
+  box-shadow: 0 0 0 3px rgba(76, 126, 168, 0.3);
+}
+
+.spawn-submit-btn {
+  width: 100%;
+  background-color: #4C7EA8;
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 14px 20px;
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: var(--transition-fast);
+}
+
+.spawn-submit-btn:hover:not(:disabled) {
+  background-color: #3b82f6;
+  transform: translateY(-1px);
+}
+
+.spawn-submit-btn.is-disabled {
+  background-color: #8B8B82;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.btn-micro-caption {
+  display: block;
+  font-size: 12px;
+  color: #8A9088;
+  margin-top: 8px;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   5. STATE DIAGRAM PANEL
+   ========================================================================== */
+.active-tracking-pill {
+  font-size: 13px;
+  background-color: #14181A;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.state-diagram-wrapper {
+  padding: 10px 0 6px;
+}
+
+.state-nodes-flow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.state-node {
+  background-color: #14181A;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  text-align: center;
+  flex: 1;
+  min-width: 96px;
+  position: relative;
+  transition: var(--transition-normal);
+}
+
+.state-node.node-running {
+  border-color: rgba(63, 166, 107, 0.4);
+}
+
+.state-node.node-ready {
+  border-color: rgba(76, 126, 168, 0.4);
+}
+
+.state-node.node-waiting {
+  border-color: rgba(217, 143, 62, 0.4);
+}
+
+.state-node.is-active-node {
+  background-color: #242C30;
+  color: #fff;
+  border-color: #3FA66B;
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(63, 166, 107, 0.4);
+}
+
+.state-node.is-active-node .node-badge {
+  color: #3FA66B;
+}
+
+.node-badge {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #D9DBD4;
+}
+
+.node-sub {
+  display: block;
+  font-size: 11px;
+  color: #8A9088;
+  margin-top: 4px;
+}
+
+.state-arrow-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #8A9088;
+}
+
+.state-arrow {
+  font-size: 16px;
+}
+
+.arrow-sub {
+  font-size: 9px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.state-branches-row {
+  display: grid;
+  grid-template-columns: 1fr 160px 1fr;
+  gap: 14px;
+  align-items: center;
+}
+
+.branch-card {
+  background-color: #14181A;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  color: #8A9088;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   6. CPU RUNNING SLOT
+   ========================================================================== */
+.running-process-display {
+  background-color: #14181A;
+  border: 1px solid rgba(63, 166, 107, 0.3);
+  border-radius: var(--radius-md);
+  padding: 24px;
+}
+
+.running-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.running-pid-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #3FA66B;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #3FA66B;
+  animation: pulse-zombie 1s infinite;
+}
+
+.running-name {
+  font-size: 18px;
+  color: #FFFFFF;
+}
+
+.cpu-progress-section {
+  margin-bottom: 18px;
+}
+
+.progress-labels, .quantum-label-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #8A9088;
+  margin-bottom: 6px;
+}
+
+.progress-bar-track, .quantum-bar-track {
+  height: 10px;
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3FA66B, #52cc86);
+  transition: width 0.2s ease;
+}
+
+.quantum-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4C7EA8, #60a5fa);
+  transition: width 0.2s ease;
+}
+
+.quantum-caption {
+  display: block;
+  font-size: 12px;
+  color: #8A9088;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+.running-actions-row {
+  display: flex;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.running-action-btn {
+  flex: 1;
+  background-color: #242C30;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #D9DBD4;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.running-action-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.running-action-btn.kill-btn:hover {
+  background-color: #D9534F;
+  color: #fff;
+  border-color: #D9534F;
+}
+
+.cpu-idle-display {
+  text-align: center;
+  padding: 36px 18px;
+  color: #8A9088;
+  background-color: #14181A;
+  border-radius: var(--radius-md);
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.idle-indicator {
+  width: 12px;
+  height: 12px;
+  background-color: #8B8B82;
+  border-radius: 50%;
+  margin: 0 auto 10px;
+}
+
+.idle-title {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #D9DBD4;
+  margin-bottom: 4px;
+}
+
+.idle-desc {
+  font-size: 13px;
+}
+
+/* ==========================================================================
+   7. PROCESS LIST & PCB CARDS (Generous Card Padding)
+   ========================================================================== */
+.queue-count-badge {
+  font-size: 13px;
+  background-color: #14181A;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pcb-cards-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.pcb-empty-state {
+  text-align: center;
+  padding: 36px 20px;
+  color: #8A9088;
+  font-size: 14px;
+}
+
+.pcb-card {
+  background-color: #242C30;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  padding: 22px 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.pcb-card:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.pcb-card.is-selected {
+  border-color: #4C7EA8;
+  box-shadow: 0 0 0 3px rgba(76, 126, 168, 0.35);
+}
+
+/* Context switch 300ms visual flash */
+.is-context-switching-in {
+  animation: switch-flash-in 0.4s ease;
+}
+
+.is-context-switching-out {
+  animation: switch-flash-out 0.4s ease;
+}
+
+@keyframes switch-flash-in {
+  0% { transform: scale(1.02); border-color: #3FA66B; box-shadow: 0 0 24px rgba(63, 166, 107, 0.6); }
+  100% { transform: scale(1); }
+}
+
+@keyframes switch-flash-out {
+  0% { border-color: #D98F3E; box-shadow: 0 0 24px rgba(217, 143, 62, 0.6); }
+  100% { }
+}
+
+.pcb-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.pcb-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pcb-pid-badge {
+  font-size: 13px;
+  font-weight: 700;
+  color: #38bdf8;
+}
+
+.pcb-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.pcb-state-caption {
+  font-size: 13px;
+  color: #8A9088;
+  margin-bottom: 16px;
+}
+
+.pcb-progress-box {
+  margin-bottom: 16px;
+}
+
+.pcb-progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #8A9088;
+  margin-bottom: 6px;
+}
+
+.pcb-progress-track {
+  height: 8px;
+  background-color: #14181A;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.pcb-progress-fill {
+  height: 100%;
+  transition: width 0.2s ease;
+}
+
+.pcb-actions-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.action-btn-with-caption {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pcb-btn {
+  width: 100%;
+  background-color: #14181A;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #D9DBD4;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.pcb-btn:hover {
+  background-color: #242C30;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.pcb-btn.wake-btn {
+  color: #3FA66B;
+  border-color: rgba(63, 166, 107, 0.4);
+}
+
+.pcb-btn.wake-btn:hover {
+  background-color: rgba(63, 166, 107, 0.15);
+}
+
+.pcb-btn.kill-btn:hover {
+  background-color: #D9534F;
+  color: #FFFFFF;
+  border-color: #D9534F;
+}
+
+.action-caption {
+  font-size: 12px;
+  color: #8A9088;
+  line-height: 1.35;
+}
+
+.terminated-label {
+  font-size: 13px;
+  color: #8B8B82;
+  text-align: center;
+  width: 100%;
+  display: block;
+  padding: 8px 0;
+}
+
+/* Collapsible Technical Details */
+.pcb-tech-toggle-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 12px;
+}
+
+.tech-toggle-btn {
+  background: transparent;
+  border: none;
+  color: #8A9088;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 6px 0;
+  transition: var(--transition-fast);
+}
+
+.tech-toggle-btn:hover {
+  color: #D9DBD4;
+  text-decoration: underline;
+}
+
+.pcb-tech-details-drawer {
+  background-color: #14181A;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.tech-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tech-label {
+  font-size: 11px;
+  color: #8A9088;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.tech-val {
+  font-size: 13px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.tech-sub-caption {
+  font-size: 11px;
+  color: #59656E;
+}
+
+.tech-registers-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.reg-mini-boxes {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  font-size: 12px;
+  background-color: #1D2326;
+  padding: 10px;
+  border-radius: 4px;
+  color: #FFFFFF;
+}
+
+/* ==========================================================================
+   8. KNOWLEDGE CHECK SECTION
+   ========================================================================== */
+.sandbox-quiz-section {
+  margin-top: 24px;
+}
+
+.quiz-panel {
+  background-color: #1D2326;
+  padding: 32px 36px;
+}
+
+.quiz-progress-pill {
+  display: flex;
+  gap: 14px;
+  font-size: 13px;
+}
+
+.score-tag {
+  background-color: rgba(63, 166, 107, 0.15);
+  color: #3FA66B;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.quiz-question-text {
+  font-size: 19px;
+  color: #FFFFFF;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.quiz-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.quiz-option-btn {
+  background-color: #14181A;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  color: #D9DBD4;
+}
+
+.quiz-option-btn:hover:not(:disabled) {
+  border-color: rgba(255, 255, 255, 0.3);
+  background-color: #242C30;
+}
+
+.quiz-option-btn.option-selected {
+  border-color: #4C7EA8;
+  background-color: rgba(76, 126, 168, 0.2);
+}
+
+.quiz-option-btn.option-correct {
+  border-color: #3FA66B;
+  background-color: rgba(63, 166, 107, 0.2);
+}
+
+.quiz-option-btn.option-incorrect {
+  border-color: #D9534F;
+  background-color: rgba(217, 83, 79, 0.2);
+}
+
+.opt-letter {
+  font-size: 13px;
+  font-weight: 700;
+  background-color: #242C30;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #FFFFFF;
+}
+
+.opt-text {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.quiz-feedback-box {
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.feedback-success {
+  background-color: rgba(63, 166, 107, 0.15);
+  border: 1px solid #3FA66B;
+}
+
+.feedback-error {
+  background-color: rgba(217, 83, 79, 0.15);
+  border: 1px solid #D9534F;
+}
+
+.feedback-status-row {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.feedback-explanation {
+  font-size: 15px;
+  color: #D9DBD4;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.quiz-controls-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.quiz-action-btn {
+  background-color: #4C7EA8;
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.quiz-action-btn:hover:not(:disabled) {
+  background-color: #3b82f6;
+}
+
+.quiz-action-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}

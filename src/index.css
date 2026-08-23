@@ -12,6 +12,25 @@
   --glass-border: rgba(255, 255, 255, 0.1);
   /* Highly refined, professional easing curve for buttery smooth transitions */
   --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Shared typography tokens (used by sandbox & future components) */
+  --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+  --font-heading: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", "SF Mono", monospace;
+
+  /* Shared radius tokens */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+
+  /* Shared transition tokens */
+  --transition-fast: all 0.15s ease;
+  --transition-normal: all 0.25s ease;
+
+  /* Process state colors (used by sandbox visualizations) */
+  --color-state-running: #3FA66B;
+  --color-state-ready: #4C7EA8;
 }
 
 * {

@@ -5,6 +5,8 @@ import Layout from './components/shared/Layout';
 // Dynamic code-splitting: each page is compiled into its own isolated chunk
 const LandingPage = lazy(() => import('./pages/LandingPage'));
 const LaunchPage = lazy(() => import('./pages/LaunchPage'));
+const ProcessManagementTheoryPage = lazy(() => import('./pages/os/process_management/ProcessManagementTheoryPage'));
+const ProcessManagementPage = lazy(() => import('./pages/os/process_management/ProcessManagementPage'));
 const ProcessSync = lazy(() => import('./pages/os/process_synchronization/ProcessSync'));
 const ProcessSyncHub = lazy(() => import('./pages/os/process_synchronization/ProcessSyncHub'));
 const MutexPage = lazy(() => import('./pages/os/process_synchronization/MutexPage'));
@@ -45,6 +47,15 @@ export default function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<LandingPage />} />
             <Route path="launch" element={<LaunchPage />} />
+            
+            {/* Process Management Theory & Sandbox Routes */}
+            <Route path="learn/process-management" element={<ProcessManagementTheoryPage />} />
+            <Route path="learn/process-management/sandbox" element={<ProcessManagementPage />} />
+
+            {/* Backwards compatibility redirects */}
+            <Route path="os/process-management" element={<Navigate to="/learn/process-management" replace />} />
+            <Route path="os/process-management/sandbox" element={<Navigate to="/learn/process-management/sandbox" replace />} />
+
             <Route path="os/sync" element={<ProcessSync />}>
               <Route index element={<ProcessSyncHub />} />
               <Route path="mutex" element={<MutexPage />} />

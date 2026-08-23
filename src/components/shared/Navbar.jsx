@@ -280,6 +280,20 @@ export default function Navbar() {
                             </div>
                           </div>
 
+                          <div
+                            className="mega-card"
+                            onClick={() => handleSubtopicClick('/learn/process-management')}
+                            style={{ cursor: 'pointer' }}
+                          >
+                            <div className="mega-card-title">
+                              <span className="mega-card-title-dot" style={{ background: '#3FA66B', boxShadow: '0 0 10px #3FA66B' }} />
+                              Process Management
+                            </div>
+                            <div className="mega-card-desc">
+                              Visualize PCB lifecycle, CPU scheduling algorithms &amp; process state transitions.
+                            </div>
+                          </div>
+
                           <Link to="/launch" className="mega-btn-all" onClick={() => setHoveredTab(null)}>
                             All OS Modules 🚀
                           </Link>
